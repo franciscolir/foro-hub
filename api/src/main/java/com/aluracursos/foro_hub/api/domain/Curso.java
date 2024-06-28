@@ -14,9 +14,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
+@EqualsAndHashCode(of = "id")
+
 public class Curso {
     private Long id;
+
     private String nombre;
+
     private Categoria categoria;
 }
