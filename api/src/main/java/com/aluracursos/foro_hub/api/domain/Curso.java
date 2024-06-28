@@ -1,7 +1,6 @@
 package com.aluracursos.foro_hub.api.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 
 @Table(name = "cursos")
-@Entity(name = "Cursos")
+@Entity(name = "Curso")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,6 +16,8 @@ import lombok.NoArgsConstructor;
 
 public class Curso {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;

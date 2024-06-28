@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 
@@ -29,7 +28,7 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "perfil_id", nullable = false)
-    private Perfil perfil;
+    private Perfil perfiles;
 
     @OneToMany(mappedBy = "autorTopico", cascade = CascadeType.ALL)
     private List<Topico> topicos;

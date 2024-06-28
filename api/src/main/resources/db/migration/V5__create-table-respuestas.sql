@@ -7,7 +7,7 @@ create table respuestas(
     solucion varchar(500),
 
 
-    primary key(id)
+    primary key(id),
 
        constraint fk_respuestas_usuario_id foreign key(usuario_id) references usuarios(id),
        constraint fk_respuestas_topico_id foreign key(topico_id) references topicos(id)

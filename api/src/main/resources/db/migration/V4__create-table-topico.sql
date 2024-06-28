@@ -9,8 +9,8 @@ create table topicos(
     respuestas bigint DEFAULT 0,
 
 
-    primary key(id)
+    primary key(id),
 
-       constraint fk_topicos_usuario_id foreign key(usuario_id) references usuarios(id),
-       constraint fk_topicos_curso_id foreign key(curso_id) references cursos(id)
+        CONSTRAINT fk_topicos_usuario_id FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+        CONSTRAINT fk_topicos_curso_id FOREIGN KEY (curso_id) REFERENCES cursos(id)
     );
