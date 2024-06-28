@@ -1,6 +1,5 @@
 package com.aluracursos.foro_hub.api.domain;
 
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -17,6 +16,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of = "id")
 
 public class Curso {
+
     private Long id;
 
     private String nombre;
