@@ -1,4 +1,4 @@
-package com.aluracursos.foro_hub.api.domain;
+package com.aluracursos.foro_hub.api.domain.usuario;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,4 +25,9 @@ public class Perfil {
 
     @OneToMany(mappedBy = "perfiles", cascade = CascadeType.ALL)
     private List<Usuario> autores;
+
+    public Perfil(DatosPerfil datos) {
+        this.id = datos.id();
+    }
+
 }

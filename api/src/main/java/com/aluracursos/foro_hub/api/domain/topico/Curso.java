@@ -1,4 +1,4 @@
-package com.aluracursos.foro_hub.api.domain;
+package com.aluracursos.foro_hub.api.domain.topico;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

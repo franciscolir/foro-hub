@@ -1,5 +1,7 @@
-package com.aluracursos.foro_hub.api.domain;
+package com.aluracursos.foro_hub.api.domain.usuario;
 
+import com.aluracursos.foro_hub.api.domain.topico.Respuesta;
+import com.aluracursos.foro_hub.api.domain.topico.Topico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -30,9 +32,19 @@ public class Usuario {
     @JoinColumn(name = "perfil_id", nullable = false)
     private Perfil perfiles;
 
+    //private Boolean activo;
+
     @OneToMany(mappedBy = "autorTopico", cascade = CascadeType.ALL)
     private List<Topico> topicos;
 
     @OneToMany(mappedBy = "autorRespuesta", cascade = CascadeType.ALL)
     private List<Respuesta> respuestas;
+
+    public Usuario(DatosRegistroUsuario datos) {
+        this.nombre = datos.nombre();
+        this.correoElectronico = datos.correoElectronico();
+        this.contraseña = datos.contraseña();
+        this.perfiles = new Perfil(datos.perfiles());
+        //this.activo = true;
+       }
 }

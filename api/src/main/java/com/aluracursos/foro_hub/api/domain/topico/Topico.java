@@ -1,5 +1,6 @@
-package com.aluracursos.foro_hub.api.domain;
+package com.aluracursos.foro_hub.api.domain.topico;
 
+import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,6 +44,13 @@ public class Topico {
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL)
     private List<Respuesta> respuestas;
 
-
-
+    public Topico(DatosRegistraTopico datos) {
+        this.id = getId();
+        this.titulo = datos.titulo();
+        this.mensaje = datos.mensaje();
+        this.fechaCreacion = LocalDateTime.now();
+        this.status = Estado.SIN_RESPUESTA;
+        this.autorTopico = getAutorTopico();
+        this.curso = datos.curso();
+    }
 }

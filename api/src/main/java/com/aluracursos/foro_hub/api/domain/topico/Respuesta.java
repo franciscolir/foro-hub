@@ -1,5 +1,6 @@
-package com.aluracursos.foro_hub.api.domain;
+package com.aluracursos.foro_hub.api.domain.topico;
 
+import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
