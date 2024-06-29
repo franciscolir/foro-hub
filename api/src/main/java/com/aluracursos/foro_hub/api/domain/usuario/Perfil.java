@@ -9,25 +9,11 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 
-@Table(name = "perfiles")
-@Entity(name = "Perfil")
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class Perfil {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public enum Perfil {
 
-    private String nombre;
+    INSTRUCTOR,
+    ALUMNO
 
-    @OneToMany(mappedBy = "perfiles", cascade = CascadeType.ALL)
-    private List<Usuario> autores;
-
-    public Perfil(DatosPerfil datos) {
-        this.id = datos.id();
-    }
 
 }

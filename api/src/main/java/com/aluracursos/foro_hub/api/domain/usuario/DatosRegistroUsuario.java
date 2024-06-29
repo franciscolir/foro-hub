@@ -17,5 +17,5 @@ public record DatosRegistroUsuario(
         String contraseña,
 
         @NotNull(message = "Datos de perfil son obligatorias")
-        DatosPerfil perfiles) {
+        Perfil perfil) {
 }

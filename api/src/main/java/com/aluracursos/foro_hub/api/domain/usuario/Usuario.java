@@ -28,9 +28,8 @@ public class Usuario {
 
     private String contraseña;
 
-    @ManyToOne
-    @JoinColumn(name = "perfil_id", nullable = false)
-    private Perfil perfiles;
+    @Enumerated(EnumType.STRING)
+    private Perfil perfil;
 
     //private Boolean activo;
 
@@ -44,7 +43,7 @@ public class Usuario {
         this.nombre = datos.nombre();
         this.correoElectronico = datos.correoElectronico();
         this.contraseña = datos.contraseña();
-        this.perfiles = new Perfil(datos.perfiles());
+        this.perfil = datos.perfil();
         //this.activo = true;
        }
 }
