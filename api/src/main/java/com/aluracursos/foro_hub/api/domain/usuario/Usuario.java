@@ -31,7 +31,7 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 
-    //private Boolean activo;
+    private Boolean activo;
 
     @OneToMany(mappedBy = "autorTopico", cascade = CascadeType.ALL)
     private List<Topico> topicos;
@@ -44,6 +44,23 @@ public class Usuario {
         this.correoElectronico = datos.correoElectronico();
         this.contraseña = datos.contraseña();
         this.perfil = datos.perfil();
-        //this.activo = true;
+        this.activo = true;
        }
+
+    public void actualizarInformacion(DatosActualizaUsuario datos) {
+        if (datos.nombre() != null)
+            this.nombre = datos.nombre();
+        if (datos.perfil() != null)
+            this.perfil = datos.perfil();
+    }
+
+    public void actualizarContraseña(DatosCambiaContraseñaUsuario datos) {
+
+        if (datos.nuevaContraseña() != null)
+            this.contraseña = datos.nuevaContraseña();
+
+    }
+    public void inactivarUsuario(){
+        this.activo = false;
+    }
 }

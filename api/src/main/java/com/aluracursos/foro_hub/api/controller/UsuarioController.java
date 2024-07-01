@@ -1,10 +1,7 @@
 package com.aluracursos.foro_hub.api.controller;
 
 
-import com.aluracursos.foro_hub.api.domain.usuario.DatosRegistroUsuario;
-import com.aluracursos.foro_hub.api.domain.usuario.DatosResponseUsuario;
-import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
-import com.aluracursos.foro_hub.api.domain.usuario.UsuarioService;
+import com.aluracursos.foro_hub.api.domain.usuario.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +15,52 @@ import org.springframework.web.bind.annotation.*;
 //@SecurityRequirement(name = "bearer-key")
 
 public class UsuarioController {
-        @Autowired
-        UsuarioService service;
-        @Autowired
-        UsuarioRepository repository;
+    @Autowired
+    UsuarioService service;
+    @Autowired
+    UsuarioRepository repository;
 
-        @PostMapping
-        @Transactional
-        public ResponseEntity<DatosResponseUsuario> ingresarTopico(@RequestBody @Valid DatosRegistroUsuario datos) {
+    @PostMapping
+    @Transactional
+    public ResponseEntity<DatosResponseUsuario> ingresarTopico(@RequestBody @Valid DatosRegistroUsuario datos) {
 
-            var response = service.validar(datos);
-            return ResponseEntity.ok(response);
-        }
-        //muestra todos los datos de 1 usuario
-         @GetMapping("/{id}")
-         public ResponseEntity consultarUsuario (@PathVariable Long id){
-
-            var usuario  =  repository.findById(id);
-             return ResponseEntity.ok(new DatosResponseUsuario(usuario.get().getId(), usuario.get().getNombre(),usuario.get().getPerfil()));
+        var response = service.registrar(datos);
+        return ResponseEntity.ok(response);
+    }
+    //muestra todos los datos de 1 usuario
+    @GetMapping("/{id}")
+    public ResponseEntity consultarUsuario (@PathVariable Long id){
+    service.validaIdAndActivo(id);
+    var usuario  =  repository.getReferenceById(id);
+    var response = new DatosResponseUsuario(usuario.getId(), usuario.getNombre(),usuario.getPerfil());
+        return ResponseEntity.ok(response);
     }
 
+    //actualiza un usuario
+    @PutMapping
+    @Transactional
+    public ResponseEntity actualizaUsuario (@RequestBody @Valid DatosActualizaUsuario datos){
+
+        var response = service.actualizar(datos);
+        return ResponseEntity.ok(response);
+    }
+    //actualiza un contarseña de usuario
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity actualizaContraseña (@PathVariable Long id, @RequestBody @Valid DatosCambiaContraseñaUsuario datos){
+
+        var response = service.cambiaContraseña(id,datos);
+        return ResponseEntity.ok(response);
+    }
+
+    //eliminar usuario (delete logico)
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity eliminarUsuario (@PathVariable Long id){
+       //if(repository.existByIdAndActivo(id)==true)  {
+        //Usuario usuario = repository.getReferenceByIdAndActivo(id);
+        //usuario.inactivarUsuario();}
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

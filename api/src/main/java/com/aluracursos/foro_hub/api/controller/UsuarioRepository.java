@@ -10,4 +10,10 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     Boolean existsByCorreoElectronico(String correoElectronico);
 
+    boolean existsByIdAndContraseña(Long id, String contraseña);
+
+
+    boolean existsByIdAndActivoTrue(Long id);
+    //boolean existsActivoTrueById(Long id);
+
 }
