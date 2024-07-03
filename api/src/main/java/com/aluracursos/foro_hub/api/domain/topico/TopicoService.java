@@ -20,39 +20,49 @@ public class TopicoService {
 
     public DatosResponseTopico ingresarTopico (DatosRegistraTopico datos){
 
-            //paciente
-            //if(!usuarioRepository.findById(datos.usuarioId()).isPresent()){
-                if (!usuarioRepository.existsByIdAndActivoTrue(datos.usuarioId())) {
-                System.out.println(datos.usuarioId()+"datos usuario id en service dentro del if");
-                throw new ValidacionDeIntegridad("este id para el usuario no fue encontrado");
-            }
-            //medico
-            if(!cursoRepository.findById(datos.cursoId()).isPresent()){
-                System.out.println(datos.cursoId()+"datos curso id en service dentro del if");
-                throw new ValidacionDeIntegridad("este id para el curso no fue encontrado");
-            }
+        if (!usuarioRepository.existsByIdAndActivoTrue(datos.usuarioId())) {
+            throw new ValidacionDeIntegridad("este id para el usuario no fue encontrado");
+        }
 
-            //validadores.forEach(v-> v.validar(datos));
+        if(!cursoRepository.findById(datos.cursoId()).isPresent()){
+            throw new ValidacionDeIntegridad("este id para el curso no fue encontrado");
+        }
 
-            var usuario = usuarioRepository.findById(datos.usuarioId()).get();
-            var curso = cursoRepository.findById(datos.cursoId()).get();
-            var fecha = LocalDateTime.now();
+        var usuario = usuarioRepository.findById(datos.usuarioId()).get();
+        var curso = cursoRepository.findById(datos.cursoId()).get();
+        var fecha = LocalDateTime.now();
+
+        var topico = new Topico(
+                null,
+                datos.titulo(),
+                datos.mensaje(),
+                fecha,
+                Estado.CREADO,
+                usuario,
+                curso,
+                true,
+                null);
+
+        topicoRepository.save(topico);
+
+        return new DatosResponseTopico(topico);
+
+    }
+
+    public void delete(Long id) {
+        validaIdAndActivo(id);
+        Topico topico= topicoRepository.getReferenceById(id);
+        topico.inactivarUsuario();
 
 
-            var topico = new Topico(
-                    null,
-                    datos.titulo(),
-                    datos.mensaje(),
-                    fecha,
-                    Estado.CREADO,
-                    usuario,
-                    curso,
-                    null);
-        System.out.println(topico+"topico despues de instanciar objeto topico antes de retornar hacia controller");
-            topicoRepository.save(topico);
+    }
 
-            return new DatosResponseTopico(topico);
+    public Boolean validaIdAndActivo(Long id) {
+        if (!topicoRepository.existsByIdAndActivoTrue(id)) {
 
+            throw new ValidacionDeIntegridad("este id de usuario no existe");
+        }
+        return true;
     }
 
 

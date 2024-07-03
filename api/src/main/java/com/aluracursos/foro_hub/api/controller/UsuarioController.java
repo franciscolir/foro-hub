@@ -4,7 +4,10 @@ package com.aluracursos.foro_hub.api.controller;
 import com.aluracursos.foro_hub.api.domain.usuario.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +30,18 @@ public class UsuarioController {
         var response = service.registrar(datos);
         return ResponseEntity.ok(response);
     }
+    //Get para obtener todos los usuarios con paginacion
+
+
+    //muestra lista de usuarios
+   @GetMapping
+    public ResponseEntity<Page<DatosListadoUsuarios>> listaMedico(Pageable paginacion){
+    var response = repository.findByActivoTrue(paginacion).map(DatosListadoUsuarios::new);
+        return ResponseEntity.ok(response);
+    }
+
+
+
     //muestra todos los datos de 1 usuario
     @GetMapping("/{id}")
     public ResponseEntity consultarUsuario (@PathVariable Long id){
@@ -57,9 +72,6 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarUsuario (@PathVariable Long id){
-       //if(repository.existByIdAndActivo(id)==true)  {
-        //Usuario usuario = repository.getReferenceByIdAndActivo(id);
-        //usuario.inactivarUsuario();}
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

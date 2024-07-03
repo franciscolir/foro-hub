@@ -42,6 +42,8 @@ public class Topico {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
+    private Boolean activo;
+
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL)
     private List<Respuesta> respuestas;
 
@@ -54,43 +56,14 @@ public class Topico {
         this.usuario = getUsuario();
         this.curso = getCurso();
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public LocalDateTime getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public Estado getStatus() {
-        return status;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public List<Respuesta>getRespuestas() {
-        return respuestas;
+    //MEtodo para inactivar Topico
+    public void inactivarUsuario(){
+        this.activo = false;
     }
     // Método para obtener el número total de respuestas
     public int getTotalRespuestas() {
         return respuestas != null ? respuestas.size() : 0;
     }
-
 
 
 
