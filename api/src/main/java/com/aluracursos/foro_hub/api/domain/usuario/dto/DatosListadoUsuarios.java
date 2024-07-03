@@ -1,7 +1,6 @@
-package com.aluracursos.foro_hub.api.domain.usuario;
+package com.aluracursos.foro_hub.api.domain.usuario.dto;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
 
 public record DatosListadoUsuarios (
 

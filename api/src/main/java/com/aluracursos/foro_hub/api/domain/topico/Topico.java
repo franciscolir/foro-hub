@@ -1,6 +1,8 @@
 package com.aluracursos.foro_hub.api.domain.topico;
 
 import com.aluracursos.foro_hub.api.domain.curso.Curso;
+import com.aluracursos.foro_hub.api.domain.topico.dto.DatosActualizaTopico;
+import com.aluracursos.foro_hub.api.domain.topico.dto.DatosRegistraTopico;
 import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -63,6 +65,15 @@ public class Topico {
     // Método para obtener el número total de respuestas
     public int getTotalRespuestas() {
         return respuestas != null ? respuestas.size() : 0;
+    }
+    public void actualizarInformacion(DatosActualizaTopico datos) {
+        if (datos.id() != null)
+            this.id = datos.id();
+        if (datos.titulo() != null)
+            this.titulo = datos.titulo();
+        if (datos.mensaje() != null)
+            this.mensaje = datos.mensaje();
+
     }
 
 

@@ -1,4 +1,4 @@
-package com.aluracursos.foro_hub.api.domain.usuario;
+package com.aluracursos.foro_hub.api.domain.usuario.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,7 +1,9 @@
 package com.aluracursos.foro_hub.api.domain.usuario;
 
 import com.aluracursos.foro_hub.api.domain.topico.Respuesta;
-import com.aluracursos.foro_hub.api.domain.topico.Topico;
+import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosActualizaUsuario;
+import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosCambiaContraseñaUsuario;
+import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosRegistroUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

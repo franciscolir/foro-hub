@@ -2,6 +2,9 @@ package com.aluracursos.foro_hub.api.domain.topico;
 
 
 import com.aluracursos.foro_hub.api.domain.curso.CursoRepository;
+import com.aluracursos.foro_hub.api.domain.topico.dto.DatosActualizaTopico;
+import com.aluracursos.foro_hub.api.domain.topico.dto.DatosRegistraTopico;
+import com.aluracursos.foro_hub.api.domain.topico.dto.DatosResponseTopico;
 import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +51,27 @@ public class TopicoService {
         return new DatosResponseTopico(topico);
 
     }
+    public DatosResponseTopico actualizar(DatosActualizaTopico datos) {
+        validaIdAndActivo(datos.id());
+        Topico topico = topicoRepository.getReferenceById(datos.id());
+        topico.actualizarInformacion(datos);
+        var response = new DatosResponseTopico(
+                topico.getId(),
+                topico.getTitulo(),
+                topico.getMensaje(),
+                topico.getFechaCreacion(),
+                Estado.ACTUALIZADO,
+                topico.getTotalRespuestas(),
+                topico.getUsuario().getId(),
+                topico.getCurso().getId()
+        );
+        return response;
+    }
 
     public void delete(Long id) {
         validaIdAndActivo(id);
         Topico topico= topicoRepository.getReferenceById(id);
         topico.inactivarUsuario();
-
 
     }
 
@@ -64,6 +82,7 @@ public class TopicoService {
         }
         return true;
     }
+
 
 
 }

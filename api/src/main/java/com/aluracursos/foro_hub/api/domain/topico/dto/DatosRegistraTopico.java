@@ -1,4 +1,4 @@
-package com.aluracursos.foro_hub.api.domain.topico;
+package com.aluracursos.foro_hub.api.domain.topico.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

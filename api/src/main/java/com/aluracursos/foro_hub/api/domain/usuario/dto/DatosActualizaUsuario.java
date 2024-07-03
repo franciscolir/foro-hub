@@ -1,6 +1,7 @@
-package com.aluracursos.foro_hub.api.domain.usuario;
+package com.aluracursos.foro_hub.api.domain.usuario.dto;
 
 
+import com.aluracursos.foro_hub.api.domain.usuario.Perfil;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 

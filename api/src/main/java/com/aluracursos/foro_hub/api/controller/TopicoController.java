@@ -2,7 +2,10 @@ package com.aluracursos.foro_hub.api.controller;
 
 
 import com.aluracursos.foro_hub.api.domain.topico.*;
-import com.aluracursos.foro_hub.api.domain.usuario.DatosListadoUsuarios;
+import com.aluracursos.foro_hub.api.domain.topico.dto.DatosActualizaTopico;
+import com.aluracursos.foro_hub.api.domain.topico.dto.DatosListadoTopicos;
+import com.aluracursos.foro_hub.api.domain.topico.dto.DatosRegistraTopico;
+import com.aluracursos.foro_hub.api.domain.topico.dto.DatosResponseTopico;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,13 @@ public class TopicoController {
     @GetMapping
     public ResponseEntity<Page<DatosListadoTopicos>> listaTopicos(Pageable paginacion){
        var response = repository.findByActivoTrue(paginacion).map(DatosListadoTopicos::new);
+        return ResponseEntity.ok(response);
+    }
+    //actualiza topico
+    @PutMapping
+    @Transactional
+    public ResponseEntity actualizarTopico (@RequestBody @Valid DatosActualizaTopico datos){
+        var response = service.actualizar(datos);
         return ResponseEntity.ok(response);
     }
 

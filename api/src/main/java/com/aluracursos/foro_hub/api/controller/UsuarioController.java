@@ -2,6 +2,7 @@ package com.aluracursos.foro_hub.api.controller;
 
 
 import com.aluracursos.foro_hub.api.domain.usuario.*;
+import com.aluracursos.foro_hub.api.domain.usuario.dto.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
