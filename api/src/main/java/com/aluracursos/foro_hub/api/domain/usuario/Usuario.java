@@ -33,8 +33,8 @@ public class Usuario {
 
     private Boolean activo;
 
-    @OneToMany(mappedBy = "autorTopico", cascade = CascadeType.ALL)
-    private List<Topico> topicos;
+    //@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    //private List<Topico> topicos;
 
     @OneToMany(mappedBy = "autorRespuesta", cascade = CascadeType.ALL)
     private List<Respuesta> respuestas;
@@ -62,5 +62,18 @@ public class Usuario {
     }
     public void inactivarUsuario(){
         this.activo = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", correoElectronico='" + correoElectronico + '\'' +
+                ", contraseña='" + contraseña + '\'' +
+                ", perfil=" + perfil +
+                ", activo=" + activo +
+                ", respuestas=" + respuestas +
+                '}';
     }
 }

@@ -4,6 +4,7 @@ package com.aluracursos.foro_hub.api.controller;
 import com.aluracursos.foro_hub.api.domain.topico.Topico;
 import com.aluracursos.foro_hub.api.domain.topico.TopicoRepository;
 import com.aluracursos.foro_hub.api.domain.topico.DatosRegistraTopico;
+import com.aluracursos.foro_hub.api.domain.topico.TopicoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,28 @@ public class TopicoController {
 
     @Autowired
     TopicoRepository repository;
+    @Autowired
+    TopicoService service;
 
     @PostMapping
     @Transactional
 
     public ResponseEntity ingresarTopico(@RequestBody @Valid DatosRegistraTopico datos) {
-        Topico topico = new Topico(datos);
-        var response = repository.save(topico);
-        return ResponseEntity.ok(response);
+        System.out.println("_________________________________________________");
+        System.out.println("_________________________________________________");
+        System.out.println("_________________________________________________");
+        System.out.println("_________________________________________________");
+        System.out.println(datos);
+        var response =service.ingresarTopico(datos);
+        System.out.println(datos);
+        System.out.println("_________________________________________________");
+        System.out.println(response);
+        System.out.println("_________________________________________________");
+        System.out.println("_________________________________________________");
+        System.out.println("_________________________________________________");
+        System.out.println("_________________________________________________");
 
+
+        return ResponseEntity.ok(response);
     }
 }
