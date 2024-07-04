@@ -17,7 +17,9 @@ public class UsuarioService {
 
 
     public DatosResponseUsuario registrar(DatosRegistroUsuario datos) {
-
+        if (repository.existsByCorreoElectronicoAndActivoFalse(datos.correoElectronico())) {
+            throw new ValidacionDeIntegridad("el correo electronico ya fue registrado, pero esta inactivo");
+        }
         if (repository.existsByCorreoElectronico(datos.correoElectronico())) {
             throw new ValidacionDeIntegridad("este correo electronico ya fue registrado");
         }

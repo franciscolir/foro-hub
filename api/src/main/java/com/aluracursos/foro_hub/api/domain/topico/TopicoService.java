@@ -55,17 +55,8 @@ public class TopicoService {
         validaIdAndActivo(datos.id());
         Topico topico = topicoRepository.getReferenceById(datos.id());
         topico.actualizarInformacion(datos);
-        var response = new DatosResponseTopico(
-                topico.getId(),
-                topico.getTitulo(),
-                topico.getMensaje(),
-                topico.getFechaCreacion(),
-                Estado.ACTUALIZADO,
-                topico.getTotalRespuestas(),
-                topico.getUsuario().getId(),
-                topico.getCurso().getId()
-        );
-        return response;
+        
+        return new DatosResponseTopico(topico);
     }
 
     public void delete(Long id) {

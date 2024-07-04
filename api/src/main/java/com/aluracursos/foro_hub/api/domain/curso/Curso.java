@@ -24,6 +24,8 @@ public class Curso {
 
     private String categoria;
 
+    private Boolean activo;
+
     //@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
     //private List<Topico> topicos;
 
@@ -31,8 +33,19 @@ public class Curso {
         //this.cursoId = curso.id();
         this.nombre = curso.nombre();
         this.categoria = curso.categoria();
+        this.activo = true;
     }
 
+    public void actualizarInformacion(DatosActualizaCurso datos) {
+        if (datos.nombre() != null)
+            this.nombre = datos.nombre();
+        if (datos.categoria() != null)
+            this.categoria = datos.categoria();
+    }
+
+    public void inactivarCurso(){
+        this.activo = false;
+    }
     @Override
     public String toString() {
         return "Curso{" +

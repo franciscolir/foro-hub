@@ -73,6 +73,7 @@ public class Topico {
             this.titulo = datos.titulo();
         if (datos.mensaje() != null)
             this.mensaje = datos.mensaje();
+        this.status = Estado.ACTUALIZADO;
 
     }
 

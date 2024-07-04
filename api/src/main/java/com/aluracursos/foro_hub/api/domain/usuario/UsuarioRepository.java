@@ -13,10 +13,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
     boolean existsByIdAndContraseña(Long id, String contraseña);
 
-
     boolean existsByIdAndActivoTrue(Long id);
 
     Page<Usuario> findByActivoTrue(Pageable paginacion);
-    //boolean existsActivoTrueById(Long id);
+
+    Boolean existsByCorreoElectronicoAndActivoFalse(String correoElectronico);
+
 
 }
