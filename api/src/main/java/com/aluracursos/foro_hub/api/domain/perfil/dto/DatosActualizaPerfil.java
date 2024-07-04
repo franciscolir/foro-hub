@@ -1,16 +1,15 @@
-package com.aluracursos.foro_hub.api.domain.usuario.dto;
+package com.aluracursos.foro_hub.api.domain.perfil.dto;
 
-import com.aluracursos.foro_hub.api.domain.perfil.Perfil;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record DatosActualizaUsuario(
-
+public record DatosActualizaPerfil(
         @NotNull(message = "El id es obligatorio")
         Long id,
 
+        @NotBlank(message = "El nombre es obligatorio")
         @Pattern(regexp = "^[a-zA-ZñÑ\\s]*$", message = "Este campo solo puede contener letras")
-        String nombre,
-
-        Perfil perfil) {
+        String nombre
+) {
 }

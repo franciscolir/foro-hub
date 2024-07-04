@@ -1,6 +1,7 @@
 package com.aluracursos.foro_hub.api.domain.usuario;
 
-import com.aluracursos.foro_hub.api.domain.topico.Respuesta;
+import com.aluracursos.foro_hub.api.domain.perfil.Perfil;
+
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosActualizaUsuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosCambiaContraseñaUsuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosRegistroUsuario;
@@ -9,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.List;
+
 
 
 @Table(name = "usuarios")
@@ -30,30 +31,31 @@ public class Usuario {
 
     private String contraseña;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "perfil_id")
     private Perfil perfil;
 
     private Boolean activo;
 
-    //@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    //private List<Topico> topicos;
-
-    @OneToMany(mappedBy = "autorRespuesta", cascade = CascadeType.ALL)
-    private List<Respuesta> respuestas;
+    //@OneToMany(mappedBy = "autorRespuesta", cascade = CascadeType.ALL)
+    //private List<Respuesta> respuestas;
 
     public Usuario(DatosRegistroUsuario datos) {
+        this.id = getId();
         this.nombre = datos.nombre();
         this.correoElectronico = datos.correoElectronico();
         this.contraseña = datos.contraseña();
-        this.perfil = datos.perfil();
+        this.perfil = getPerfil();
         this.activo = true;
-       }
+    }
+
+
 
     public void actualizarInformacion(DatosActualizaUsuario datos) {
         if (datos.nombre() != null)
             this.nombre = datos.nombre();
         if (datos.perfil() != null)
-            this.perfil = datos.perfil();
+            this.perfil = getPerfil();
     }
 
     public void actualizarContraseña(DatosCambiaContraseñaUsuario datos) {
@@ -75,7 +77,6 @@ public class Usuario {
                 ", contraseña='" + contraseña + '\'' +
                 ", perfil=" + perfil +
                 ", activo=" + activo +
-                ", respuestas=" + respuestas +
                 '}';
     }
 }

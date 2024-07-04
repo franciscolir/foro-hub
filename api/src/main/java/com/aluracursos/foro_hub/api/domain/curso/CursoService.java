@@ -1,5 +1,8 @@
 package com.aluracursos.foro_hub.api.domain.curso;
 
+import com.aluracursos.foro_hub.api.domain.curso.dto.DatosActualizaCurso;
+import com.aluracursos.foro_hub.api.domain.curso.dto.DatosRegistroCurso;
+import com.aluracursos.foro_hub.api.domain.curso.dto.DatosResponseCurso;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

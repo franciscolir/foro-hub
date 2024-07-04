@@ -1,6 +1,7 @@
 package com.aluracursos.foro_hub.api.domain.usuario;
 
 
+import com.aluracursos.foro_hub.api.domain.perfil.PerfilRepository;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosActualizaUsuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosCambiaContraseñaUsuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosRegistroUsuario;
@@ -14,6 +15,8 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository repository;
+    @Autowired
+    PerfilRepository perfilRepository;
 
 
     public DatosResponseUsuario registrar(DatosRegistroUsuario datos) {
@@ -23,10 +26,18 @@ public class UsuarioService {
         if (repository.existsByCorreoElectronico(datos.correoElectronico())) {
             throw new ValidacionDeIntegridad("este correo electronico ya fue registrado");
         }
-        var usuario = new Usuario(datos);
+        var perfil = perfilRepository.findById(datos.perfilId()).get();
+
+        var usuario = new Usuario(
+                null,
+                datos.nombre(),
+                datos.correoElectronico(),
+                datos.contraseña(),
+                perfil,
+                true);
         repository.save(usuario);
 
-        return new DatosResponseUsuario(usuario.getId(), usuario.getNombre(), usuario.getPerfil());
+        return new DatosResponseUsuario(usuario);
     }
 
     public DatosResponseUsuario actualizar(DatosActualizaUsuario datos) {
@@ -35,7 +46,7 @@ public class UsuarioService {
         Usuario usuario = usuarioById(datos.id());
         usuario.actualizarInformacion(datos);
 
-        return new DatosResponseUsuario(usuario.getId(), usuario.getNombre(), usuario.getPerfil());
+        return new DatosResponseUsuario(usuario);
     }
 
     public String cambiaContraseña(Long id, DatosCambiaContraseñaUsuario datos) {

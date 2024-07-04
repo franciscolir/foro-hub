@@ -13,6 +13,6 @@ public record DatosListadoUsuarios (
         String perfil
 ){
     public DatosListadoUsuarios(Usuario usuario) {
-        this (usuario.getId(), usuario.getNombre(), usuario.getCorreoElectronico(), usuario.getPerfil().toString());
+        this (usuario.getId(), usuario.getNombre(), usuario.getCorreoElectronico(), usuario.getPerfil().getNombre());
     }
 }

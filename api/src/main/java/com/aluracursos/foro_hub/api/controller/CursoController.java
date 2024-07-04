@@ -1,6 +1,10 @@
 package com.aluracursos.foro_hub.api.controller;
 
 import com.aluracursos.foro_hub.api.domain.curso.*;
+import com.aluracursos.foro_hub.api.domain.curso.dto.DatosActualizaCurso;
+import com.aluracursos.foro_hub.api.domain.curso.dto.DatosListadoCursos;
+import com.aluracursos.foro_hub.api.domain.curso.dto.DatosRegistroCurso;
+import com.aluracursos.foro_hub.api.domain.curso.dto.DatosResponseCurso;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

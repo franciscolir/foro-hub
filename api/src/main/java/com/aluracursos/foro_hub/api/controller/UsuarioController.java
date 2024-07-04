@@ -48,7 +48,7 @@ public class UsuarioController {
     public ResponseEntity consultarUsuario (@PathVariable Long id){
     service.validaIdAndActivo(id);
     var usuario  =  repository.getReferenceById(id);
-    var response = new DatosResponseUsuario(usuario.getId(), usuario.getNombre(),usuario.getPerfil());
+    var response = new DatosResponseUsuario(usuario);
         return ResponseEntity.ok(response);
     }
 

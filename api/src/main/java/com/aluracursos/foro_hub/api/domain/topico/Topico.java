@@ -35,12 +35,11 @@ public class Topico {
     @Enumerated(EnumType.STRING)
     private Estado status;
 
-    //se debe accesae a perfil
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
@@ -58,14 +57,17 @@ public class Topico {
         this.usuario = getUsuario();
         this.curso = getCurso();
     }
-    //MEtodo para inactivar Topico
+
+    //Metodo para inactivar Topico
     public void inactivarUsuario(){
         this.activo = false;
     }
+
     // Método para obtener el número total de respuestas
     public int getTotalRespuestas() {
         return respuestas != null ? respuestas.size() : 0;
     }
+
     public void actualizarInformacion(DatosActualizaTopico datos) {
         if (datos.id() != null)
             this.id = datos.id();
@@ -74,10 +76,7 @@ public class Topico {
         if (datos.mensaje() != null)
             this.mensaje = datos.mensaje();
         this.status = Estado.ACTUALIZADO;
-
     }
-
-
 
     @Override
     public String toString() {

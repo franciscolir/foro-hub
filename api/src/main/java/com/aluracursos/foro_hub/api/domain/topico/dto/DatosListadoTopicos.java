@@ -17,9 +17,9 @@ public record DatosListadoTopicos(Long id,
 
                                   int respuestas,
 
-                                  Long usuarioId,
+                                  String usuario,
 
-                                  Long cursoId
+                                  String curso
 ) {
 
 
@@ -32,8 +32,8 @@ public record DatosListadoTopicos(Long id,
                 topico.getFechaCreacion(),
                 topico.getStatus(),
                 topico.getTotalRespuestas(),
-                topico.getUsuario().getId(),
-                topico.getCurso().getId()
+                topico.getUsuario().getNombre(),
+                topico.getCurso().getNombre()
         );
     }
 }

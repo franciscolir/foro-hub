@@ -1,5 +1,7 @@
 package com.aluracursos.foro_hub.api.domain.curso;
 
+import com.aluracursos.foro_hub.api.domain.curso.dto.DatosActualizaCurso;
+import com.aluracursos.foro_hub.api.domain.curso.dto.DatosRegistroCurso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -17,7 +19,6 @@ import lombok.NoArgsConstructor;
 public class Curso {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
@@ -25,9 +26,6 @@ public class Curso {
     private String categoria;
 
     private Boolean activo;
-
-    //@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
-    //private List<Topico> topicos;
 
     public Curso(DatosRegistroCurso curso){
         //this.cursoId = curso.id();

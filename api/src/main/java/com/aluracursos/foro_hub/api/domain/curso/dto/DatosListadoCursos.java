@@ -1,6 +1,6 @@
-package com.aluracursos.foro_hub.api.domain.curso;
+package com.aluracursos.foro_hub.api.domain.curso.dto;
 
-import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
+import com.aluracursos.foro_hub.api.domain.curso.Curso;
 
 public record DatosListadoCursos(
         Long id,
