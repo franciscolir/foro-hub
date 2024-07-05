@@ -20,10 +20,10 @@ public record DatosResponseTopico(
 
         int respuestas,
 
-        //Long usuarioId,
-        String usuario,
-        //Long cursoId
-        String curso
+        Long usuarioId,
+
+        Long cursoId
+
 ) {
 
 
@@ -36,8 +36,8 @@ public record DatosResponseTopico(
                 topico.getFechaCreacion(),
                 topico.getStatus(),
                 topico.getTotalRespuestas(),
-                topico.getUsuario().getNombre(),
-                topico.getCurso().getNombre()
+                topico.getUsuario().getId(),
+                topico.getCurso().getId()
         );
     }
 }

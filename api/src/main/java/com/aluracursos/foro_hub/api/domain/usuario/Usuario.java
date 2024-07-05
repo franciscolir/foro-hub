@@ -31,7 +31,7 @@ public class Usuario {
 
     private String contraseña;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
 

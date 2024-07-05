@@ -1,6 +1,7 @@
 package com.aluracursos.foro_hub.api.domain.topico;
 
 import com.aluracursos.foro_hub.api.domain.curso.Curso;
+import com.aluracursos.foro_hub.api.domain.respuesta.Respuesta;
 import com.aluracursos.foro_hub.api.domain.topico.dto.DatosActualizaTopico;
 import com.aluracursos.foro_hub.api.domain.topico.dto.DatosRegistraTopico;
 import com.aluracursos.foro_hub.api.domain.usuario.Usuario;

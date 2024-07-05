@@ -39,14 +39,14 @@ public class CursoController {
         return ResponseEntity.ok(response);
     }
 
-//muestra todos los datos de 1 curso
-@GetMapping("/{id}")
-public ResponseEntity consultarCurso (@PathVariable Long id){
-    service.validaIdAndActivo(id);
-    var curso  =  repository.getReferenceById(id);
-    var response = new DatosResponseCurso(curso.getId(),curso.getNombre(),curso.getCategoria());
-    return ResponseEntity.ok(response);
-}
+    //muestra todos los datos de 1 curso
+    @GetMapping("/{id}")
+    public ResponseEntity consultarCurso (@PathVariable Long id){
+        service.validaIdAndActivo(id);
+        var curso  =  repository.getReferenceById(id);
+        var response = new DatosResponseCurso(curso.getId(),curso.getNombre(),curso.getCategoria());
+        return ResponseEntity.ok(response);
+    }
 
     //actualiza un curso
     @PutMapping

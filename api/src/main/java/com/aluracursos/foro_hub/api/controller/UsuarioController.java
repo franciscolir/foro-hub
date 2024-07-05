@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
-@RequestMapping("/usuario")
+@RequestMapping("/usuarios")
 //@SecurityRequirement(name = "bearer-key")
 
 public class UsuarioController {
@@ -26,22 +26,18 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<DatosResponseUsuario> ingresarTopico(@RequestBody @Valid DatosRegistroUsuario datos) {
+    public ResponseEntity<DatosResponseUsuario> ingresarUsuario(@RequestBody @Valid DatosRegistroUsuario datos) {
 
         var response = service.registrar(datos);
         return ResponseEntity.ok(response);
     }
-    //Get para obtener todos los usuarios con paginacion
-
 
     //muestra lista de usuarios
    @GetMapping
-    public ResponseEntity<Page<DatosListadoUsuarios>> listaMedico(Pageable paginacion){
+    public ResponseEntity<Page<DatosListadoUsuarios>> listaUsuarios(Pageable paginacion){
     var response = repository.findByActivoTrue(paginacion).map(DatosListadoUsuarios::new);
         return ResponseEntity.ok(response);
     }
-
-
 
     //muestra todos los datos de 1 usuario
     @GetMapping("/{id}")
