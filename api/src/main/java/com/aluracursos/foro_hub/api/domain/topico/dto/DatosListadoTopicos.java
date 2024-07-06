@@ -6,22 +6,14 @@ import com.aluracursos.foro_hub.api.domain.topico.Topico;
 import java.time.LocalDateTime;
 
 public record DatosListadoTopicos(Long id,
-
                                   String titulo,
-
                                   String mensaje,
-
                                   LocalDateTime fechaCreacion,
-
                                   Estado status,
-
                                   int respuestas,
-
-                                  String usuario,
-
-                                  String curso
+                                  Long usuarioId,
+                                  Long cursoId
 ) {
-
 
     public DatosListadoTopicos(Topico topico) {
 
@@ -32,8 +24,8 @@ public record DatosListadoTopicos(Long id,
                 topico.getFechaCreacion(),
                 topico.getStatus(),
                 topico.getTotalRespuestas(),
-                topico.getUsuario().getNombre(),
-                topico.getCurso().getNombre()
+                topico.getUsuario().getId(),
+                topico.getCurso().getId()
         );
     }
 }

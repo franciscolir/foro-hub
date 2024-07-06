@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,26 +25,20 @@ public class Topico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String titulo;
-
     private String mensaje;
-
     private LocalDateTime fechaCreacion;
-
+    private LocalDateTime fechaClose;
     @Enumerated(EnumType.STRING)
     private Estado status;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curso_id")
     private Curso curso;
-
     private Boolean activo;
-
+    private Boolean close;
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL)
     private List<Respuesta> respuestas;
 
@@ -57,10 +50,11 @@ public class Topico {
         this.status = Estado.CREADO;
         this.usuario = getUsuario();
         this.curso = getCurso();
+        this.fechaClose = null;
     }
 
     //Metodo para inactivar Topico
-    public void inactivarUsuario(){
+    public void inactivarTopico(){
         this.activo = false;
     }
 
@@ -69,6 +63,7 @@ public class Topico {
         return respuestas != null ? respuestas.size() : 0;
     }
 
+    //Metodo para actualizar informacion del topico y cambiar su estado
     public void actualizarInformacion(DatosActualizaTopico datos) {
         if (datos.id() != null)
             this.id = datos.id();
@@ -77,6 +72,13 @@ public class Topico {
         if (datos.mensaje() != null)
             this.mensaje = datos.mensaje();
         this.status = Estado.ACTUALIZADO;
+    }
+
+    //Metodo para cerrar el topico y no permitir mas respuestas
+    public void cerrarTopico() {
+        this.status = Estado.CERRADO;
+        this.fechaClose = LocalDateTime.now();
+        this.close = true;
     }
 
     @Override

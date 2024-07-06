@@ -11,5 +11,4 @@ public interface PerfilRepository extends JpaRepository<Perfil,Long> {
 
     Page<Perfil> findByActivoTrue(Pageable paginacion);
 
-    Boolean existsByIdAndActivoFalse(Long id);
 }

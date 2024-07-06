@@ -1,11 +1,9 @@
 package com.aluracursos.foro_hub.api.controller;
 
-
 import com.aluracursos.foro_hub.api.domain.usuario.*;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 //@SecurityRequirement(name = "bearer-key")
 
 public class UsuarioController {
+
     @Autowired
     UsuarioService service;
     @Autowired
@@ -42,7 +41,7 @@ public class UsuarioController {
     //muestra todos los datos de 1 usuario
     @GetMapping("/{id}")
     public ResponseEntity consultarUsuario (@PathVariable Long id){
-    service.validaIdAndActivo(id);
+    service.validaUsuarioIdAndActivo(id);
     var usuario  =  repository.getReferenceById(id);
     var response = new DatosResponseUsuario(usuario);
         return ResponseEntity.ok(response);

@@ -5,11 +5,8 @@ import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
 public record DatosListadoUsuarios (
 
         Long id,
-
         String nombre,
-
         String correoElectronico,
-
         String perfil
 ){
     public DatosListadoUsuarios(Usuario usuario) {

@@ -1,11 +1,7 @@
 package com.aluracursos.foro_hub.api.controller;
 
-
 import com.aluracursos.foro_hub.api.domain.topico.*;
-import com.aluracursos.foro_hub.api.domain.topico.dto.DatosActualizaTopico;
-import com.aluracursos.foro_hub.api.domain.topico.dto.DatosListadoTopicos;
-import com.aluracursos.foro_hub.api.domain.topico.dto.DatosRegistraTopico;
-import com.aluracursos.foro_hub.api.domain.topico.dto.DatosResponseTopico;
+import com.aluracursos.foro_hub.api.domain.topico.dto.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,41 +24,53 @@ public class TopicoController {
 
     @PostMapping
     @Transactional
-
     public ResponseEntity ingresarTopico(@RequestBody @Valid DatosRegistraTopico datos) {
-        var response =service.ingresarTopico(datos);
+        var response = service.ingresarTopico(datos);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity obtenerTopico(@PathVariable Long id){
-        service.validaIdAndActivo(id);
-        var topico = repository.getReferenceById(id);
+        service.validaTopicoIdAndActivo(id);
+        var topico = service.topicoById(id);
         var response = new DatosResponseTopico(topico);
+
         return ResponseEntity.ok(response);
     }
+
     //muestra lista de topicos
     @GetMapping
     public ResponseEntity<Page<DatosListadoTopicos>> listaTopicos(Pageable paginacion){
-       var response = repository.findByActivoTrue(paginacion).map(DatosListadoTopicos::new);
+        var response = repository.findByActivoTrue(paginacion).map(DatosListadoTopicos::new);
+
         return ResponseEntity.ok(response);
     }
-    //actualiza topico
+
+    //actualiza informacion topico y estado
     @PutMapping
     @Transactional
     public ResponseEntity actualizarTopico (@RequestBody @Valid DatosActualizaTopico datos){
         var response = service.actualizar(datos);
+
         return ResponseEntity.ok(response);
     }
 
+    //cierra el topico
+    @PutMapping("/cerrar")
+    @Transactional
+    public ResponseEntity cierraTopico (@RequestBody @Valid DatosCierraTopico datos){
+        var response = service.cerrar(datos);
+
+        return ResponseEntity.ok(response);
+    }
 
     //eliminar topico (delete logico)
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarTopico (@PathVariable Long id){
         service.delete(id);
+
         return ResponseEntity.noContent().build();
     }
-
 }

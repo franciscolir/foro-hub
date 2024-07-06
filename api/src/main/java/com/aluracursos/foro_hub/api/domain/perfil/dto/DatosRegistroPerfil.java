@@ -8,7 +8,6 @@ public record DatosRegistroPerfil(
 
         @NotNull(message = "El id es obligatorio")
         Long id,
-
         @NotBlank(message = "El nombre es obligatorio")
         @Pattern(regexp = "^[a-zA-ZñÑ\\s]*$", message = "Este campo solo puede contener letras")
         String nombre

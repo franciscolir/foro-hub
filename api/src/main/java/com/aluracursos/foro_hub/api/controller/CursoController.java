@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 //@SecurityRequirement(name = "bearer-key")
 
 public class CursoController {
+
     @Autowired
     CursoRepository repository;
     @Autowired
@@ -28,10 +29,10 @@ public class CursoController {
     @PostMapping
     @Transactional
     public ResponseEntity<DatosResponseCurso> ingresarCurso(@RequestBody @Valid DatosRegistroCurso datos) {
-
         var response = service.registrar(datos);
         return ResponseEntity.ok(response);
     }
+
     //muestra lista de cursos
     @GetMapping
     public ResponseEntity<Page<DatosListadoCursos>> listaCursos(Pageable paginacion){
@@ -43,8 +44,9 @@ public class CursoController {
     @GetMapping("/{id}")
     public ResponseEntity consultarCurso (@PathVariable Long id){
         service.validaIdAndActivo(id);
-        var curso  =  repository.getReferenceById(id);
-        var response = new DatosResponseCurso(curso.getId(),curso.getNombre(),curso.getCategoria());
+        var curso  = service.cursoById(id);
+        var response = new DatosResponseCurso(curso);
+
         return ResponseEntity.ok(response);
     }
 
@@ -52,8 +54,8 @@ public class CursoController {
     @PutMapping
     @Transactional
     public ResponseEntity actualizaCurso (@RequestBody @Valid DatosActualizaCurso datos){
-
         var response = service.actualizar(datos);
+
         return ResponseEntity.ok(response);
     }
 
@@ -62,7 +64,7 @@ public class CursoController {
     @Transactional
     public ResponseEntity eliminarCurso (@PathVariable Long id){
         service.delete(id);
+
         return ResponseEntity.noContent().build();
     }
-
 }

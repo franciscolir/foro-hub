@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.*;
 //@SecurityRequirement(name = "bearer-key")
 
 public class RespuestaController {
+
     @Autowired
     RespuestaService service;
     @Autowired
     RespuestaRepository repository;
-
 
     //registra una nueva respuesta
     @PostMapping

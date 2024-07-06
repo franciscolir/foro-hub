@@ -19,16 +19,14 @@ import lombok.NoArgsConstructor;
 public class Curso {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nombre;
-
     private String categoria;
-
     private Boolean activo;
 
     public Curso(DatosRegistroCurso curso){
-        //this.cursoId = curso.id();
+        this.id = getId();
         this.nombre = curso.nombre();
         this.categoria = curso.categoria();
         this.activo = true;

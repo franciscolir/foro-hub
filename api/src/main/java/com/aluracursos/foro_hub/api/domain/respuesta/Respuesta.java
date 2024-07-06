@@ -4,8 +4,6 @@ import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosActualizaRespuesta
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosRegistroRespuesta;
 import com.aluracursos.foro_hub.api.domain.topico.Topico;
 import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
-import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosActualizaUsuario;
-import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosCambiaContraseñaUsuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -26,22 +24,15 @@ public class Respuesta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String mensaje;
-
     @ManyToOne
     @JoinColumn(name = "topico_id")
     private Topico topico;
-
     private LocalDateTime fechaCreacion;
-
-    //se debe accesae a perfil
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario autorRespuesta;
-
     private String solucion;
-
     private Boolean activo;
 
     public Respuesta(DatosRegistroRespuesta datos) {
@@ -55,13 +46,11 @@ public class Respuesta {
     }
 
     public void actualizarInformacion(DatosActualizaRespuesta datos) {
-
         if (datos.mensaje() != null)
             this.mensaje = datos.mensaje();
         if (datos.solucion() != null)
-            this.solucion = datos.mensaje();
+            this.solucion = datos.solucion();
     }
-
 
     public void inactivarRespuesta(){
         this.activo = false;

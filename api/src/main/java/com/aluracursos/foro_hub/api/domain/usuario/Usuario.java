@@ -51,11 +51,11 @@ public class Usuario {
 
 
 
-    public void actualizarInformacion(DatosActualizaUsuario datos) {
-        if (datos.nombre() != null)
-            this.nombre = datos.nombre();
-        if (datos.perfil() != null)
-            this.perfil = getPerfil();
+    public void actualizarInformacion(Long id,String nombre,Perfil perfil) {
+        if (nombre != null)
+            this.nombre = nombre;
+        if (perfil != null)
+            this.perfil = perfil;
     }
 
     public void actualizarContraseña(DatosCambiaContraseñaUsuario datos) {

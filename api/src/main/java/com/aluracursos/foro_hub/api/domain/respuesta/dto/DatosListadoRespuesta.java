@@ -10,7 +10,7 @@ public record DatosListadoRespuesta(
 
         String mensaje,
 
-        Topico topico,
+        Long topico,
 
         LocalDateTime fechaCreacion,
 
@@ -24,7 +24,7 @@ public record DatosListadoRespuesta(
         this(
                 respuesta.getId(),
                 respuesta.getMensaje(),
-                respuesta.getTopico(),
+                respuesta.getTopico().getId(),
                 respuesta.getFechaCreacion(),
                 respuesta.getAutorRespuesta().getId(),
                 respuesta.getSolucion()
