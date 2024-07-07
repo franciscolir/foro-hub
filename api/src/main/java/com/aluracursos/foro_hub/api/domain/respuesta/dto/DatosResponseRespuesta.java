@@ -10,11 +10,11 @@ public record DatosResponseRespuesta(
 
         String mensaje,
 
-        Long topico,
+        Long topicoId,
 
         LocalDateTime fechaCreacion,
 
-        Long autorRespuesta,
+        Long usuarioId,
 
         String solucion
 ) {

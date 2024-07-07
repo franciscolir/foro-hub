@@ -1,8 +1,12 @@
 package com.aluracursos.foro_hub.api.domain.topico.dto;
 
+import com.aluracursos.foro_hub.api.controller.RespuestaController;
+import com.aluracursos.foro_hub.api.domain.respuesta.Respuesta;
 import com.aluracursos.foro_hub.api.domain.topico.Estado;
 import com.aluracursos.foro_hub.api.domain.topico.Topico;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public record DatosResponseTopico(
         Long id,
@@ -11,7 +15,8 @@ public record DatosResponseTopico(
         LocalDateTime fechaCreacion,
         LocalDateTime fechaClose,
         Estado status,
-        int respuestas,
+        int totalRespuestas,
+        List<Long> respuestasIds,
         Long usuarioId,
         Long cursoId
 ) {
@@ -26,8 +31,13 @@ public record DatosResponseTopico(
                 topico.getFechaClose(),
                 topico.getStatus(),
                 topico.getTotalRespuestas(),
+                topico.respuestasIds(),
                 topico.getUsuario().getId(),
                 topico.getCurso().getId()
         );
+
+
+
+
     }
 }

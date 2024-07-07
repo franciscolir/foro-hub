@@ -1,8 +1,6 @@
 package com.aluracursos.foro_hub.api.domain.respuesta.dto;
 
 import com.aluracursos.foro_hub.api.domain.respuesta.Respuesta;
-import com.aluracursos.foro_hub.api.domain.topico.Topico;
-
 import java.time.LocalDateTime;
 
 public record DatosListadoRespuesta(
@@ -10,11 +8,11 @@ public record DatosListadoRespuesta(
 
         String mensaje,
 
-        Long topico,
+        Long topicoId,
 
         LocalDateTime fechaCreacion,
 
-        Long autorRespuesta,
+        Long usuarioId,
 
         String solucion
 ) {

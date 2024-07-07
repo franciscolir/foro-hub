@@ -11,7 +11,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Table(name = "topicos")
 @Entity(name = "Topico")
@@ -39,8 +41,8 @@ public class Topico {
     private Curso curso;
     private Boolean activo;
     private Boolean close;
-    @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL)
-    private List<Respuesta> respuestas;
+    @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Respuesta> respuestas = new ArrayList<>();
 
     public Topico(DatosRegistraTopico datos) {
         this.id = getId();
@@ -55,13 +57,24 @@ public class Topico {
 
     //Metodo para inactivar Topico
     public void inactivarTopico(){
+
         this.activo = false;
     }
 
     // Método para obtener el número total de respuestas
     public int getTotalRespuestas() {
+
         return respuestas != null ? respuestas.size() : 0;
     }
+
+    public List<Long> respuestasIds (){
+
+        return respuestas.stream()
+                .map(Respuesta::getId)
+                .collect(Collectors.toList());
+    }
+
+
 
     //Metodo para actualizar informacion del topico y cambiar su estado
     public void actualizarInformacion(DatosActualizaTopico datos) {

@@ -55,4 +55,5 @@ public class Respuesta {
     public void inactivarRespuesta(){
         this.activo = false;
     }
+
 }
