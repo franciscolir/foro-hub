@@ -1,8 +1,6 @@
 package com.aluracursos.foro_hub.api.domain.usuario;
 
 import com.aluracursos.foro_hub.api.domain.perfil.Perfil;
-
-import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosActualizaUsuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosCambiaContraseñaUsuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosRegistroUsuario;
 import jakarta.persistence.*;
@@ -10,7 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
+import java.util.List;
 
 
 @Table(name = "usuarios")
@@ -19,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,11 +36,8 @@ public class Usuario {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
-
     private Boolean activo;
 
-    //@OneToMany(mappedBy = "autorRespuesta", cascade = CascadeType.ALL)
-    //private List<Respuesta> respuestas;
 
     public Usuario(DatosRegistroUsuario datos) {
         this.id = getId();
@@ -67,6 +66,44 @@ public class Usuario {
     public void inactivarUsuario(){
         this.activo = false;
     }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        //return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(getPerfil().getNombre()));
+    }
+
+    @Override
+    public String getPassword() {
+        return contraseña;
+    }
+
+    @Override
+    public String getUsername() {
+        return correoElectronico;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
+
 
     @Override
     public String toString() {

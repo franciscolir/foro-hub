@@ -5,6 +5,7 @@ import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosActualizaRespuesta
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosListadoRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosRegistroRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosResponseRespuesta;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @ResponseBody
 @RequestMapping("/respuestas")
-//@SecurityRequirement(name = "bearer-key")
+@SecurityRequirement(name = "bearer-key")
 
 public class RespuestaController {
 
@@ -27,6 +28,7 @@ public class RespuestaController {
     RespuestaRepository repository;
 
     //registra una nueva respuesta
+
     @PostMapping
     @Transactional
     public ResponseEntity<DatosResponseRespuesta> ingresarRespuesta(@RequestBody @Valid DatosRegistroRespuesta datos) {
@@ -36,6 +38,7 @@ public class RespuestaController {
     }
 
     //muestra lista de respuestas
+
     @GetMapping
     public ResponseEntity<Page<DatosListadoRespuesta>> listadoDeRespuestas (Pageable paginacion){
         var response = repository.findByActivoTrue(paginacion).map(DatosListadoRespuesta::new);
@@ -44,6 +47,7 @@ public class RespuestaController {
     }
 
     //muestra todos los datos de 1 respuesta
+
     @GetMapping("/{id}")
     public ResponseEntity obtenerRespuesta (@PathVariable Long id){
         service.validaRespuestaIdAndActivo(id);
@@ -54,6 +58,7 @@ public class RespuestaController {
     }
 
     //actualizar una respuesta
+
     @PutMapping
     @Transactional
     public ResponseEntity actualizarRespuesta (@RequestBody @Valid DatosActualizaRespuesta datos){
@@ -63,6 +68,7 @@ public class RespuestaController {
     }
 
     //eliminar respuesta (delete logico)
+
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarRespuesta (@PathVariable Long id){

@@ -5,6 +5,7 @@ import com.aluracursos.foro_hub.api.domain.curso.dto.DatosActualizaCurso;
 import com.aluracursos.foro_hub.api.domain.curso.dto.DatosListadoCursos;
 import com.aluracursos.foro_hub.api.domain.curso.dto.DatosRegistroCurso;
 import com.aluracursos.foro_hub.api.domain.curso.dto.DatosResponseCurso;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
-@RequestMapping("/cursos")
-//@SecurityRequirement(name = "bearer-key")
+@RequestMapping("admin/cursos")
+@SecurityRequirement(name = "bearer-key")
 
 public class CursoController {
 

@@ -2,6 +2,7 @@ package com.aluracursos.foro_hub.api.controller;
 
 import com.aluracursos.foro_hub.api.domain.topico.*;
 import com.aluracursos.foro_hub.api.domain.topico.dto.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @ResponseBody
 @RequestMapping("/topicos")
-//@SecurityRequirement(name = "bearer-key")
+@SecurityRequirement(name = "bearer-key")
 public class TopicoController {
 
     @Autowired
     TopicoRepository repository;
     @Autowired
     TopicoService service;
+
+    //registra un nuevo topico
 
     @PostMapping
     @Transactional
@@ -29,6 +32,8 @@ public class TopicoController {
 
         return ResponseEntity.ok(response);
     }
+
+    //muestra lista de topicos
 
     @GetMapping("/{id}")
     public ResponseEntity obtenerTopico(@PathVariable Long id){
@@ -40,6 +45,7 @@ public class TopicoController {
     }
 
     //muestra lista de topicos
+
     @GetMapping
     public ResponseEntity<Page<DatosListadoTopicos>> listaTopicos(Pageable paginacion){
         var response = repository.findByActivoTrue(paginacion).map(DatosListadoTopicos::new);
@@ -48,6 +54,7 @@ public class TopicoController {
     }
 
     //actualiza informacion topico y estado
+
     @PutMapping
     @Transactional
     public ResponseEntity actualizarTopico (@RequestBody @Valid DatosActualizaTopico datos){
@@ -55,6 +62,7 @@ public class TopicoController {
 
         return ResponseEntity.ok(response);
     }
+
 
     //cierra el topico
     @PutMapping("/cerrar")
@@ -64,6 +72,7 @@ public class TopicoController {
 
         return ResponseEntity.ok(response);
     }
+
 
     //eliminar topico (delete logico)
     @DeleteMapping("/{id}")

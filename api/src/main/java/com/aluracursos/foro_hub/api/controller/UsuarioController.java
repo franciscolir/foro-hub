@@ -2,6 +2,7 @@ package com.aluracursos.foro_hub.api.controller;
 
 import com.aluracursos.foro_hub.api.domain.usuario.*;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @ResponseBody
 @RequestMapping("/usuarios")
-//@SecurityRequirement(name = "bearer-key")
+@SecurityRequirement(name = "bearer-key")
 
 public class UsuarioController {
 
@@ -22,6 +23,8 @@ public class UsuarioController {
     UsuarioService service;
     @Autowired
     UsuarioRepository repository;
+
+    //ingresar un usuario
 
     @PostMapping
     @Transactional
@@ -32,6 +35,7 @@ public class UsuarioController {
     }
 
     //muestra lista de usuarios
+
    @GetMapping
     public ResponseEntity<Page<DatosListadoUsuarios>> listaUsuarios(Pageable paginacion){
     var response = repository.findByActivoTrue(paginacion).map(DatosListadoUsuarios::new);
@@ -39,6 +43,7 @@ public class UsuarioController {
     }
 
     //muestra todos los datos de 1 usuario
+
     @GetMapping("/{id}")
     public ResponseEntity consultarUsuario (@PathVariable Long id){
     service.validaUsuarioIdAndActivo(id);
@@ -48,6 +53,7 @@ public class UsuarioController {
     }
 
     //actualiza un usuario
+
     @PutMapping
     @Transactional
     public ResponseEntity actualizaUsuario (@RequestBody @Valid DatosActualizaUsuario datos){
@@ -56,6 +62,7 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
     //actualiza un contarseña de usuario
+
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity actualizaContraseña (@PathVariable Long id, @RequestBody @Valid DatosCambiaContraseñaUsuario datos){
@@ -65,6 +72,7 @@ public class UsuarioController {
     }
 
     //eliminar usuario (delete logico)
+
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarUsuario (@PathVariable Long id){

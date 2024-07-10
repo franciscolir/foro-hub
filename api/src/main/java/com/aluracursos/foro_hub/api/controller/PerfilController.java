@@ -5,6 +5,7 @@ import com.aluracursos.foro_hub.api.domain.perfil.dto.DatosActualizaPerfil;
 import com.aluracursos.foro_hub.api.domain.perfil.dto.DatosListadoPerfiles;
 import com.aluracursos.foro_hub.api.domain.perfil.dto.DatosRegistroPerfil;
 import com.aluracursos.foro_hub.api.domain.perfil.dto.DatosResponsePerfil;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
-@RequestMapping("/perfiles")
-//@SecurityRequirement(name = "bearer-key")
+@RequestMapping("admin/perfiles")
+@SecurityRequirement(name = "bearer-key")
 
 public class PerfilController {
 
