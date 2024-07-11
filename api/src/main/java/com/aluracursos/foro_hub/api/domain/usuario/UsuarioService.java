@@ -1,13 +1,17 @@
 package com.aluracursos.foro_hub.api.domain.usuario;
 
 import com.aluracursos.foro_hub.api.domain.perfil.PerfilRepository;
+import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosActualizaUsuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosCambiaContraseñaUsuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosRegistroUsuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosResponseUsuario;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
+import com.aluracursos.foro_hub.api.infra.security.AutenticacionService;
+import com.aluracursos.foro_hub.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UsuarioService {
@@ -16,6 +20,8 @@ public class UsuarioService {
     UsuarioRepository repository;
     @Autowired
     PerfilRepository perfilRepository;
+    @Autowired
+    UserNameRepository userNameRepository;
 
     //Registra un nuevo usuario
     public DatosResponseUsuario registrar(DatosRegistroUsuario datos) {
@@ -79,6 +85,14 @@ public class UsuarioService {
         var usuario = repository.getReferenceById(id);
 
         return usuario;
+    }
+
+    public Boolean comparaId (Long tokenId, Long usuarioId ){
+        var id = userNameRepository.getReferenceById(tokenId);
+        if(!id.getTokenId().equals(usuarioId)){
+            throw new ValidacionDeIntegridad("id no corresponde a usuario autenticado");
+        }
+        return true;
     }
 
 }

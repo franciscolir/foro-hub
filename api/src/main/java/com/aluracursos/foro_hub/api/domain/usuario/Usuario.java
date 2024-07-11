@@ -23,6 +23,8 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
 
+
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -66,7 +68,6 @@ public class Usuario implements UserDetails {
     public void inactivarUsuario(){
         this.activo = false;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

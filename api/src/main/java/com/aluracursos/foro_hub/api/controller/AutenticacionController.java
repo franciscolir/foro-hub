@@ -1,5 +1,6 @@
 package com.aluracursos.foro_hub.api.controller;
 
+import com.aluracursos.foro_hub.api.domain.user.UserNameService;
 import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosAutenticacionUsuario;
 import com.aluracursos.foro_hub.api.infra.security.DatosTokenJWT;
@@ -29,12 +30,19 @@ public class AutenticacionController {
     private TokenService tokenService;
 
 
+    @Autowired
+    UserNameService userNameService;
+
+
     @Operation(summary = "Autenticar Usuario")
     @PostMapping
     public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario usuario) {
         Authentication authToken = new UsernamePasswordAuthenticationToken(usuario.correoElectronico(),usuario.contraseña());
         var authentication = manager.authenticate(authToken);
         var tokenJWT = tokenService.generarToken((Usuario) authentication.getPrincipal());
+        var extractName = tokenService.extractUsername(tokenJWT);
+        var extarcId = tokenService.extraeIdDelToken(extractName);
+        userNameService.updateUserName(1L,extarcId);
         return ResponseEntity.ok(new DatosTokenJWT(tokenJWT));
     }
 }

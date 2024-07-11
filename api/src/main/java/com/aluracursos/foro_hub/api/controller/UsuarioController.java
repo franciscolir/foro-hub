@@ -2,6 +2,7 @@ package com.aluracursos.foro_hub.api.controller;
 
 import com.aluracursos.foro_hub.api.domain.usuario.*;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.*;
+import com.aluracursos.foro_hub.api.infra.security.AutenticacionService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -23,6 +24,8 @@ public class UsuarioController {
     UsuarioService service;
     @Autowired
     UsuarioRepository repository;
+    @Autowired
+    AutenticacionService autenticacionService;
 
     //ingresar un usuario
 
@@ -34,19 +37,23 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
 
+    /*
     //muestra lista de usuarios
 
    @GetMapping
     public ResponseEntity<Page<DatosListadoUsuarios>> listaUsuarios(Pageable paginacion){
     var response = repository.findByActivoTrue(paginacion).map(DatosListadoUsuarios::new);
         return ResponseEntity.ok(response);
-    }
+    }*/
 
     //muestra todos los datos de 1 usuario
 
     @GetMapping("/{id}")
     public ResponseEntity consultarUsuario (@PathVariable Long id){
+
+        service.comparaId(1L,id);
     service.validaUsuarioIdAndActivo(id);
+    //service.comparaId(id);
     var usuario  =  repository.getReferenceById(id);
     var response = new DatosResponseUsuario(usuario);
         return ResponseEntity.ok(response);
@@ -57,7 +64,7 @@ public class UsuarioController {
     @PutMapping
     @Transactional
     public ResponseEntity actualizaUsuario (@RequestBody @Valid DatosActualizaUsuario datos){
-
+        service.comparaId(1L, datos.id());
         var response = service.actualizar(datos);
         return ResponseEntity.ok(response);
     }
@@ -66,7 +73,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity actualizaContraseña (@PathVariable Long id, @RequestBody @Valid DatosCambiaContraseñaUsuario datos){
-
+        service.comparaId(1L,id);
         var response = service.cambiaContraseña(id,datos);
         return ResponseEntity.ok(response);
     }
@@ -76,6 +83,7 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarUsuario (@PathVariable Long id){
+        service.comparaId(1L,id);
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
