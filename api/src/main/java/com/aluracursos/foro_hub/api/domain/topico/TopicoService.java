@@ -5,6 +5,7 @@ import com.aluracursos.foro_hub.api.domain.topico.dto.DatosActualizaTopico;
 import com.aluracursos.foro_hub.api.domain.topico.dto.DatosCierraTopico;
 import com.aluracursos.foro_hub.api.domain.topico.dto.DatosRegistraTopico;
 import com.aluracursos.foro_hub.api.domain.topico.dto.DatosResponseTopico;
+import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
 import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class TopicoService {
     CursoRepository cursoRepository;
     @Autowired
     TopicoRepository topicoRepository;
+    @Autowired
+    UserNameRepository userNameRepository;
 
     //Registra un nuevo topico
     public DatosResponseTopico ingresarTopico (DatosRegistraTopico datos){
@@ -98,5 +101,15 @@ public class TopicoService {
         var topico = topicoRepository.getReferenceById(id);
 
         return topico;
+    }
+    //compara id del token con el id del usuario indicado
+    public Boolean comparaId (Long tokenId, Long id ){
+        var userName = userNameRepository.getReferenceById(tokenId);
+        var topico = topicoRepository.getReferenceById(id);
+        var usuarioId = topico.getUsuario().getId();
+        if(!userName.getTokenId().equals(usuarioId)){
+            throw new ValidacionDeIntegridad("id no corresponde a usuario autenticado");
+        }
+        return true;
     }
 }

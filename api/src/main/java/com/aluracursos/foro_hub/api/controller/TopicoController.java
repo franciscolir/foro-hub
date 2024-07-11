@@ -4,6 +4,8 @@ import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosListadoRespuesta;
 import com.aluracursos.foro_hub.api.domain.topico.*;
 import com.aluracursos.foro_hub.api.domain.topico.dto.*;
 import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
+import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
+import com.aluracursos.foro_hub.api.domain.usuario.UsuarioService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -37,10 +39,11 @@ public class TopicoController {
         return ResponseEntity.ok(response);
     }
 
-    //muestra lista de topicos
+    //obtener datos de un topico registrado por usuario autenticado
 
     @GetMapping("/{id}")
     public ResponseEntity obtenerTopico(@PathVariable Long id){
+        service.comparaId(1L, id);
         service.validaTopicoIdAndActivo(id);
         var topico = service.topicoById(id);
         var response = new DatosResponseTopico(topico);
@@ -52,10 +55,8 @@ public class TopicoController {
 
     @GetMapping
     public ResponseEntity<Page<DatosListadoTopicos>> listaTopicos(Pageable paginacion){
-
         var id = userNameRepository.getReferenceById(1L);
         var usuarioId = id.getTokenId();
-
         var response = repository.findByUsuarioIdActivoTrue(usuarioId,paginacion).map(DatosListadoTopicos::new);
 
         return ResponseEntity.ok(response);
@@ -66,6 +67,7 @@ public class TopicoController {
     @PutMapping
     @Transactional
     public ResponseEntity actualizarTopico (@RequestBody @Valid DatosActualizaTopico datos){
+        service.comparaId(1L, datos.id());
         var response = service.actualizar(datos);
 
         return ResponseEntity.ok(response);
@@ -76,6 +78,7 @@ public class TopicoController {
     @PutMapping("/cerrar")
     @Transactional
     public ResponseEntity cierraTopico (@RequestBody @Valid DatosCierraTopico datos){
+        service.comparaId(1L, datos.id());
         var response = service.cerrar(datos);
 
         return ResponseEntity.ok(response);
@@ -86,6 +89,7 @@ public class TopicoController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarTopico (@PathVariable Long id){
+        service.comparaId(1L, id);
         service.delete(id);
 
         return ResponseEntity.noContent().build();

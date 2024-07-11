@@ -7,8 +7,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,20 +35,19 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
 
-    //muestra todos los datos de 1 usuario
+    //muestra todos los datos del usuario autenticado
 
     @GetMapping("/{id}")
     public ResponseEntity consultarUsuario (@PathVariable Long id){
 
         service.comparaId(1L,id);
-    service.validaUsuarioIdAndActivo(id);
-    //service.comparaId(id);
-    var usuario  =  repository.getReferenceById(id);
-    var response = new DatosResponseUsuario(usuario);
+        service.validaUsuarioIdAndActivo(id);
+        var usuario  =  repository.getReferenceById(id);
+        var response = new DatosResponseUsuario(usuario);
         return ResponseEntity.ok(response);
     }
 
-    //actualiza un usuario
+    //actualiza el usuario autenticado
 
     @PutMapping
     @Transactional
@@ -59,7 +56,7 @@ public class UsuarioController {
         var response = service.actualizar(datos);
         return ResponseEntity.ok(response);
     }
-    //actualiza un contarseña de usuario
+    //actualiza un contarseña de usuario autenticado
 
     @PutMapping("/{id}")
     @Transactional
@@ -69,7 +66,7 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
 
-    //eliminar usuario (delete logico)
+    //eliminar usuario autenticado (delete logico)
 
     @DeleteMapping("/{id}")
     @Transactional

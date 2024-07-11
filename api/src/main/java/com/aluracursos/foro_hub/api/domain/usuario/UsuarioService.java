@@ -92,6 +92,7 @@ public class UsuarioService {
         return usuario;
     }
 
+    //compara id del token con el id del usuario indicado
     public Boolean comparaId (Long tokenId, Long usuarioId ){
         var id = userNameRepository.getReferenceById(tokenId);
         if(!id.getTokenId().equals(usuarioId)){

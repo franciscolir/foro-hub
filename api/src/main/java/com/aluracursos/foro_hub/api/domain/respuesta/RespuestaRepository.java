@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface RespuestaRepository extends JpaRepository<Respuesta,Long> {
 
-    //Page<Respuesta> findByActivoTrue(Pageable paginacion);
+    Page<Respuesta> findByActivoTrue(Pageable paginacion);
     //Page<Respuesta> findByIdAndActivoTrue(Long id, Pageable paginacion);
     Boolean existsByIdAndActivoTrue(Long id);
 

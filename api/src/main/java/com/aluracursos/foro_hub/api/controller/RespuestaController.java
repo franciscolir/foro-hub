@@ -7,6 +7,7 @@ import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosRegistroRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosResponseRespuesta;
 import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
 import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
+import com.aluracursos.foro_hub.api.domain.usuario.UsuarioService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -30,8 +31,7 @@ public class RespuestaController {
     RespuestaRepository repository;
     @Autowired
     UserNameRepository userNameRepository;
-    @Autowired
-    UsuarioRepository usuarioRepository;
+
 
     //registra una nueva respuesta
 
@@ -59,6 +59,7 @@ public class RespuestaController {
 
     @GetMapping("/{id}")
     public ResponseEntity obtenerRespuesta (@PathVariable Long id){
+        service.comparaId(1L,id);
         service.validaRespuestaIdAndActivo(id);
         var respuesta  =  service.obtenerRespuestaById(id);
         var response = new DatosResponseRespuesta(respuesta);
@@ -71,6 +72,7 @@ public class RespuestaController {
     @PutMapping
     @Transactional
     public ResponseEntity actualizarRespuesta (@RequestBody @Valid DatosActualizaRespuesta datos){
+        service.comparaId(1L, datos.id());
         var response = service.actualizar(datos);
 
         return ResponseEntity.ok(response);
@@ -81,6 +83,7 @@ public class RespuestaController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarRespuesta (@PathVariable Long id){
+        service.comparaId(1L, id);
         service.delete(id);
 
         return ResponseEntity.noContent().build();
