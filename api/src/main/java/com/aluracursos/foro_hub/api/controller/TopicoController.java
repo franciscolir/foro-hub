@@ -1,7 +1,9 @@
 package com.aluracursos.foro_hub.api.controller;
 
+import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosListadoRespuesta;
 import com.aluracursos.foro_hub.api.domain.topico.*;
 import com.aluracursos.foro_hub.api.domain.topico.dto.*;
+import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -22,6 +24,8 @@ public class TopicoController {
     TopicoRepository repository;
     @Autowired
     TopicoService service;
+    @Autowired
+    UserNameRepository userNameRepository;
 
     //registra un nuevo topico
 
@@ -48,7 +52,11 @@ public class TopicoController {
 
     @GetMapping
     public ResponseEntity<Page<DatosListadoTopicos>> listaTopicos(Pageable paginacion){
-        var response = repository.findByActivoTrue(paginacion).map(DatosListadoTopicos::new);
+
+        var id = userNameRepository.getReferenceById(1L);
+        var usuarioId = id.getTokenId();
+
+        var response = repository.findByUsuarioIdActivoTrue(usuarioId,paginacion).map(DatosListadoTopicos::new);
 
         return ResponseEntity.ok(response);
     }

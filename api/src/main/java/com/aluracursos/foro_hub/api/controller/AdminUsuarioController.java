@@ -19,7 +19,7 @@ public class AdminUsuarioController {
     @ResponseBody
     @RequestMapping("/admin/usuarios")
     @SecurityRequirement(name = "bearer-key")
-
+//cambiar nombre a clase, agregar actualizar perfil
     public class UsuarioController {
 
         @Autowired

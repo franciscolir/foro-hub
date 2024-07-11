@@ -2,13 +2,8 @@ package com.aluracursos.foro_hub.api.domain.usuario;
 
 import com.aluracursos.foro_hub.api.domain.perfil.PerfilRepository;
 import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
-import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosActualizaUsuario;
-import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosCambiaContraseñaUsuario;
-import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosRegistroUsuario;
-import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosResponseUsuario;
+import com.aluracursos.foro_hub.api.domain.usuario.dto.*;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
-import com.aluracursos.foro_hub.api.infra.security.AutenticacionService;
-import com.aluracursos.foro_hub.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +22,7 @@ public class UsuarioService {
     public DatosResponseUsuario registrar(DatosRegistroUsuario datos) {
         validaUsuarioEmailAndActivoFalse(datos.correoElectronico());
         validaUsuarioEmail(datos.correoElectronico());
-        var perfil = perfilRepository.findById(datos.perfilId()).get();
+        var perfil = perfilRepository.findById(2L).get();
         var usuario = new Usuario(null, datos.nombre(), datos.correoElectronico(), datos.contraseña(), perfil, true);
         repository.save(usuario);
 
@@ -38,8 +33,18 @@ public class UsuarioService {
     public DatosResponseUsuario actualizar(DatosActualizaUsuario datos) {
         validaUsuarioIdAndActivo(datos.id());
         var usuario = usuarioById(datos.id());
+        //var perfil = perfilRepository.getReferenceById(datos.perfilId());
+        usuario.actualizarInformacion(datos.id(),datos.nombre());
+
+        return new DatosResponseUsuario(usuario);
+    }
+
+    //Actualiza perfil de usuario registrado por id
+    public DatosResponseUsuario actualizarPerfil(DatosActualizaPerfilUsuario datos) {
+        validaUsuarioIdAndActivo(datos.id());
+        var usuario = usuarioById(datos.id());
         var perfil = perfilRepository.getReferenceById(datos.perfilId());
-        usuario.actualizarInformacion(datos.id(),datos.nombre(),perfil);
+        usuario.actualizarPerfil(datos.id(),perfil);
 
         return new DatosResponseUsuario(usuario);
     }

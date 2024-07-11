@@ -13,8 +13,8 @@ public record DatosRegistroUsuario(
         @Email(message = "Formato de email invalido")
         String correoElectronico,
         @NotBlank(message = "Contraseña es obligatoria")
-        String contraseña,
-        @NotNull
-        Long perfilId
+        String contraseña
+        //@NotNull
+        //Long perfilId
 ) {
 }

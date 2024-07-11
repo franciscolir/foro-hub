@@ -52,9 +52,12 @@ public class Usuario implements UserDetails {
 
 
 
-    public void actualizarInformacion(Long id,String nombre,Perfil perfil) {
+    public void actualizarInformacion(Long id,String nombre) {
         if (nombre != null)
             this.nombre = nombre;
+    }
+
+    public void actualizarPerfil(Long id,Perfil perfil) {
         if (perfil != null)
             this.perfil = perfil;
     }

@@ -5,6 +5,8 @@ import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosActualizaRespuesta
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosListadoRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosRegistroRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosResponseRespuesta;
+import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
+import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -26,6 +28,10 @@ public class RespuestaController {
     RespuestaService service;
     @Autowired
     RespuestaRepository repository;
+    @Autowired
+    UserNameRepository userNameRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     //registra una nueva respuesta
 
@@ -37,11 +43,14 @@ public class RespuestaController {
         return ResponseEntity.ok(response);
     }
 
-    //muestra lista de respuestas
+    //muestra lista de respuestas del usuario
 
     @GetMapping
     public ResponseEntity<Page<DatosListadoRespuesta>> listadoDeRespuestas (Pageable paginacion){
-        var response = repository.findByActivoTrue(paginacion).map(DatosListadoRespuesta::new);
+        var id = userNameRepository.getReferenceById(1L);
+        var usuarioId = id.getTokenId();
+        var response = repository.findByAutorRespuestaAndActivoTrue(usuarioId,paginacion).map(DatosListadoRespuesta::new);
+        System.out.println(response);
 
         return ResponseEntity.ok(response);
     }

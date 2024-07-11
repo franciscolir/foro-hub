@@ -37,15 +37,6 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
     }
 
-    /*
-    //muestra lista de usuarios
-
-   @GetMapping
-    public ResponseEntity<Page<DatosListadoUsuarios>> listaUsuarios(Pageable paginacion){
-    var response = repository.findByActivoTrue(paginacion).map(DatosListadoUsuarios::new);
-        return ResponseEntity.ok(response);
-    }*/
-
     //muestra todos los datos de 1 usuario
 
     @GetMapping("/{id}")
