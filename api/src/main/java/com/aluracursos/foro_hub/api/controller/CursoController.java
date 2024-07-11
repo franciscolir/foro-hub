@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
-@RequestMapping("admin/cursos")
+@RequestMapping("/admin/cursos")
 @SecurityRequirement(name = "bearer-key")
-
 public class CursoController {
 
     @Autowired
@@ -31,6 +30,7 @@ public class CursoController {
     @Transactional
     public ResponseEntity<DatosResponseCurso> ingresarCurso(@RequestBody @Valid DatosRegistroCurso datos) {
         var response = service.registrar(datos);
+
         return ResponseEntity.ok(response);
     }
 
@@ -38,6 +38,7 @@ public class CursoController {
     @GetMapping
     public ResponseEntity<Page<DatosListadoCursos>> listaCursos(Pageable paginacion){
         var response = repository.findByActivoTrue(paginacion).map(DatosListadoCursos::new);
+
         return ResponseEntity.ok(response);
     }
 

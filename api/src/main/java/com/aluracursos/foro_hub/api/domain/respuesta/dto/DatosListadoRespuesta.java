@@ -5,15 +5,10 @@ import java.time.LocalDateTime;
 
 public record DatosListadoRespuesta(
         Long id,
-
         String mensaje,
-
         Long topicoId,
-
         LocalDateTime fechaCreacion,
-
         Long usuarioId,
-
         String solucion
 ) {
 

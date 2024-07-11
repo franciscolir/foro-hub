@@ -19,9 +19,7 @@ public class Perfil {
 
     @Id
     private Long id;
-
     private String nombre;
-
     private Boolean activo;
 
     public Perfil(DatosRegistroPerfil datos) {

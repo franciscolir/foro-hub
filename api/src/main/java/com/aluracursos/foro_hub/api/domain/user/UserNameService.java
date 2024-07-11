@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserNameService {
     @Autowired
-UserNameRepository userNameRepository;
+    UserNameRepository userNameRepository;
 
     public UserName updateUserName(Long id, Long tokenId) {
-        UserName user = userNameRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        UserName user = userNameRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         user.setTokenId(tokenId);
 
         return userNameRepository.save(user);

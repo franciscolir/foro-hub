@@ -6,8 +6,6 @@ import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosListadoRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosRegistroRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosResponseRespuesta;
 import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
-import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
-import com.aluracursos.foro_hub.api.domain.usuario.UsuarioService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
-@RequestMapping("/respuestas")
+@RequestMapping("/user/respuestas")
 @SecurityRequirement(name = "bearer-key")
 
 public class RespuestaController {
@@ -34,7 +32,6 @@ public class RespuestaController {
 
 
     //registra una nueva respuesta
-
     @PostMapping
     @Transactional
     public ResponseEntity<DatosResponseRespuesta> ingresarRespuesta(@RequestBody @Valid DatosRegistroRespuesta datos) {
@@ -43,8 +40,7 @@ public class RespuestaController {
         return ResponseEntity.ok(response);
     }
 
-    //muestra lista de respuestas del usuario
-
+    //muestra lista de respuestas del usuario autenticado
     @GetMapping
     public ResponseEntity<Page<DatosListadoRespuesta>> listadoDeRespuestas (Pageable paginacion){
         var id = userNameRepository.getReferenceById(1L);
@@ -55,8 +51,7 @@ public class RespuestaController {
         return ResponseEntity.ok(response);
     }
 
-    //muestra todos los datos de 1 respuesta
-
+    //muestra todos los datos de 1 respuesta del usuario autenticado
     @GetMapping("/{id}")
     public ResponseEntity obtenerRespuesta (@PathVariable Long id){
         service.comparaId(1L,id);
@@ -67,8 +62,7 @@ public class RespuestaController {
         return ResponseEntity.ok(response);
     }
 
-    //actualizar una respuesta
-
+    //actualizar una respuesta del usuario autenticado
     @PutMapping
     @Transactional
     public ResponseEntity actualizarRespuesta (@RequestBody @Valid DatosActualizaRespuesta datos){
@@ -78,7 +72,7 @@ public class RespuestaController {
         return ResponseEntity.ok(response);
     }
 
-    //eliminar respuesta (delete logico)
+    //eliminar una respuesta del usuario autenticado (delete logico)
 
     @DeleteMapping("/{id}")
     @Transactional

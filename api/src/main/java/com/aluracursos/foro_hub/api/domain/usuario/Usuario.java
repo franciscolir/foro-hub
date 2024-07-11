@@ -23,23 +23,17 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
 
-
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nombre;
-
     private String correoElectronico;
-
     private String contraseña;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
     private Boolean activo;
-
 
     public Usuario(DatosRegistroUsuario datos) {
         this.id = getId();
@@ -50,28 +44,30 @@ public class Usuario implements UserDetails {
         this.activo = true;
     }
 
-
-
+    //Actualiza nombre usuario
     public void actualizarInformacion(Long id,String nombre) {
         if (nombre != null)
             this.nombre = nombre;
     }
 
+    //Actualiza perfil usuario
     public void actualizarPerfil(Long id,Perfil perfil) {
         if (perfil != null)
             this.perfil = perfil;
     }
 
+    //Actualiza contraseña usuario
     public void actualizarContraseña(DatosCambiaContraseñaUsuario datos) {
-
         if (datos.nuevaContraseña() != null)
             this.contraseña = datos.nuevaContraseña();
-
     }
+
+    //Inactiva usuario (delete logico)
     public void inactivarUsuario(){
         this.activo = false;
     }
 
+    //Metodos UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //return List.of(new SimpleGrantedAuthority("ROLE_USER"));
@@ -107,7 +103,6 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
-
 
     @Override
     public String toString() {

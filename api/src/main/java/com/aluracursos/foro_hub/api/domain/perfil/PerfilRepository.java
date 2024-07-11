@@ -3,9 +3,10 @@ package com.aluracursos.foro_hub.api.domain.perfil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 
-
+@Repository
 public interface PerfilRepository extends JpaRepository<Perfil,Long> {
     Boolean existsByIdAndActivoTrue(Long id);
 

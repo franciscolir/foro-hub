@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-
 public class Topico {
 
     @Id
@@ -74,8 +73,6 @@ public class Topico {
                 .collect(Collectors.toList());
     }
 
-
-
     //Metodo para actualizar informacion del topico y cambiar su estado
     public void actualizarInformacion(DatosActualizaTopico datos) {
         if (datos.id() != null)
@@ -91,7 +88,7 @@ public class Topico {
     public void cerrarTopico() {
         this.status = Estado.CERRADO;
         this.fechaClose = LocalDateTime.now();
-        this.close = true;
+        this.close = false;
     }
 
     @Override

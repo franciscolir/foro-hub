@@ -64,13 +64,9 @@ public class TokenService {
     }
 
     public Long extraeIdDelToken(String userName){
-        //entra username con mail
-       // System.out.println(userName+"Este es el valor de username:AQUI ESTA");
         var userNameId = usuarioRepository.findByCorreoElectronico(userName);
-        //System.out.println(userNameId);
         var usuarioId = userNameId.getId();
-        //System.out.println(usuarioId+"Este es la var USUARIO");
-        //aqui extraigo el Id del token
+
         return usuarioId;
     }
 

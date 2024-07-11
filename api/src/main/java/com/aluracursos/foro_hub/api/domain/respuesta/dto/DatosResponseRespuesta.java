@@ -7,15 +7,10 @@ import java.time.LocalDateTime;
 public record DatosResponseRespuesta(
 
         Long id,
-
         String mensaje,
-
         Long topicoId,
-
         LocalDateTime fechaCreacion,
-
         Long usuarioId,
-
         String solucion
 ) {
 

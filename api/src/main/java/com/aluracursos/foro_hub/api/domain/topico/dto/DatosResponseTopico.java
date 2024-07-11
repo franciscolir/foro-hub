@@ -1,12 +1,9 @@
 package com.aluracursos.foro_hub.api.domain.topico.dto;
 
-import com.aluracursos.foro_hub.api.controller.RespuestaController;
-import com.aluracursos.foro_hub.api.domain.respuesta.Respuesta;
 import com.aluracursos.foro_hub.api.domain.topico.Estado;
 import com.aluracursos.foro_hub.api.domain.topico.Topico;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record DatosResponseTopico(
         Long id,
@@ -35,9 +32,5 @@ public record DatosResponseTopico(
                 topico.getUsuario().getId(),
                 topico.getCurso().getId()
         );
-
-
-
-
     }
 }

@@ -33,7 +33,6 @@ public class UsuarioService {
     public DatosResponseUsuario actualizar(DatosActualizaUsuario datos) {
         validaUsuarioIdAndActivo(datos.id());
         var usuario = usuarioById(datos.id());
-        //var perfil = perfilRepository.getReferenceById(datos.perfilId());
         usuario.actualizarInformacion(datos.id(),datos.nombre());
 
         return new DatosResponseUsuario(usuario);

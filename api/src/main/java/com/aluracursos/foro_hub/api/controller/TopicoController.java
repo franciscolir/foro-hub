@@ -1,11 +1,8 @@
 package com.aluracursos.foro_hub.api.controller;
 
-import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosListadoRespuesta;
 import com.aluracursos.foro_hub.api.domain.topico.*;
 import com.aluracursos.foro_hub.api.domain.topico.dto.*;
 import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
-import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
-import com.aluracursos.foro_hub.api.domain.usuario.UsuarioService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
-@RequestMapping("/topicos")
+@RequestMapping("/user/topicos")
 @SecurityRequirement(name = "bearer-key")
 public class TopicoController {
 
@@ -30,7 +27,6 @@ public class TopicoController {
     UserNameRepository userNameRepository;
 
     //registra un nuevo topico
-
     @PostMapping
     @Transactional
     public ResponseEntity ingresarTopico(@RequestBody @Valid DatosRegistraTopico datos) {
@@ -40,7 +36,6 @@ public class TopicoController {
     }
 
     //obtener datos de un topico registrado por usuario autenticado
-
     @GetMapping("/{id}")
     public ResponseEntity obtenerTopico(@PathVariable Long id){
         service.comparaId(1L, id);
@@ -52,7 +47,6 @@ public class TopicoController {
     }
 
     //muestra lista de topicos
-
     @GetMapping
     public ResponseEntity<Page<DatosListadoTopicos>> listaTopicos(Pageable paginacion){
         var id = userNameRepository.getReferenceById(1L);
@@ -63,7 +57,6 @@ public class TopicoController {
     }
 
     //actualiza informacion topico y estado
-
     @PutMapping
     @Transactional
     public ResponseEntity actualizarTopico (@RequestBody @Valid DatosActualizaTopico datos){
@@ -72,7 +65,6 @@ public class TopicoController {
 
         return ResponseEntity.ok(response);
     }
-
 
     //cierra el topico
     @PutMapping("/cerrar")
@@ -83,7 +75,6 @@ public class TopicoController {
 
         return ResponseEntity.ok(response);
     }
-
 
     //eliminar topico (delete logico)
     @DeleteMapping("/{id}")

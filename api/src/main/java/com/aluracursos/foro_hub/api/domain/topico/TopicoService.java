@@ -31,7 +31,7 @@ public class TopicoService {
         var usuario = usuarioRepository.findById(datos.usuarioId()).get();
         var curso = cursoRepository.findById(datos.cursoId()).get();
         var fecha = LocalDateTime.now();
-        var topico = new Topico(null, datos.titulo(), datos.mensaje(), fecha,null, Estado.CREADO, usuario, curso, true,false, null);
+        var topico = new Topico(null, datos.titulo(), datos.mensaje(), fecha,null, Estado.CREADO, usuario, curso, true,true, null);
         topicoRepository.save(topico);
 
         return new DatosResponseTopico(topico);
@@ -85,7 +85,7 @@ public class TopicoService {
 
     //valida que topico indicado no este cerrado
     public void validaTopicoIdAndClose(Long id) {
-        if (topicoRepository.existsByIdAndCloseTrue(id)) {
+        if (topicoRepository.existsByIdAndCloseFalse(id)) {
             throw new ValidacionDeIntegridad("Este topico esta cerrado. No se puede actualizar");
         }
     }
@@ -102,14 +102,14 @@ public class TopicoService {
 
         return topico;
     }
+
     //compara id del token con el id del usuario indicado
-    public Boolean comparaId (Long tokenId, Long id ){
+    public void comparaId (Long tokenId, Long id ){
         var userName = userNameRepository.getReferenceById(tokenId);
         var topico = topicoRepository.getReferenceById(id);
         var usuarioId = topico.getUsuario().getId();
         if(!userName.getTokenId().equals(usuarioId)){
-            throw new ValidacionDeIntegridad("id no corresponde a usuario autenticado");
+            throw new ValidacionDeIntegridad("datos de id solicitad no corresponde a usuario autenticado");
         }
-        return true;
     }
 }

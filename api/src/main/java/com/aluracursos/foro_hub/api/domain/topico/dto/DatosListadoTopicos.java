@@ -2,7 +2,6 @@ package com.aluracursos.foro_hub.api.domain.topico.dto;
 
 import com.aluracursos.foro_hub.api.domain.topico.Estado;
 import com.aluracursos.foro_hub.api.domain.topico.Topico;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

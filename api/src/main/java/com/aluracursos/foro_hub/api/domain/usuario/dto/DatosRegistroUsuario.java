@@ -2,7 +2,6 @@ package com.aluracursos.foro_hub.api.domain.usuario.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record DatosRegistroUsuario(
@@ -14,7 +13,5 @@ public record DatosRegistroUsuario(
         String correoElectronico,
         @NotBlank(message = "Contraseña es obligatoria")
         String contraseña
-        //@NotNull
-        //Long perfilId
 ) {
 }

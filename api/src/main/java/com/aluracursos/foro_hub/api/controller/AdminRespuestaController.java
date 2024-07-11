@@ -3,10 +3,7 @@ package com.aluracursos.foro_hub.api.controller;
 import com.aluracursos.foro_hub.api.domain.respuesta.*;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosActualizaRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosListadoRespuesta;
-import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosRegistroRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosResponseRespuesta;
-import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
-import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -21,30 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 @RequestMapping("/admin/respuestas")
 @SecurityRequirement(name = "bearer-key")
-
 public class AdminRespuestaController {
 
     @Autowired
     RespuestaService service;
     @Autowired
     RespuestaRepository repository;
-    @Autowired
-    UserNameRepository userNameRepository;
-    @Autowired
-    UsuarioRepository usuarioRepository;
 
-    //registra una nueva respuesta
-
-    @PostMapping
-    @Transactional
-    public ResponseEntity<DatosResponseRespuesta> ingresarRespuesta(@RequestBody @Valid DatosRegistroRespuesta datos) {
-        var response = service.registrar(datos);
-
-        return ResponseEntity.ok(response);
-    }
-
-    //muestra lista de respuestas del usuario
-
+    //muestra lista de respuestas de toodos los usuarios
     @GetMapping
     public ResponseEntity<Page<DatosListadoRespuesta>> listadoDeRespuestas (Pageable paginacion){
         var response = repository.findByActivoTrue(paginacion).map(DatosListadoRespuesta::new);
@@ -54,7 +35,6 @@ public class AdminRespuestaController {
     }
 
     //muestra todos los datos de 1 respuesta
-
     @GetMapping("/{id}")
     public ResponseEntity obtenerRespuesta (@PathVariable Long id){
         service.validaRespuestaIdAndActivo(id);
@@ -65,7 +45,6 @@ public class AdminRespuestaController {
     }
 
     //actualizar una respuesta
-
     @PutMapping
     @Transactional
     public ResponseEntity actualizarRespuesta (@RequestBody @Valid DatosActualizaRespuesta datos){
@@ -75,7 +54,6 @@ public class AdminRespuestaController {
     }
 
     //eliminar respuesta (delete logico)
-
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarRespuesta (@PathVariable Long id){

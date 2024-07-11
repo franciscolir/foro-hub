@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
-@RequestMapping("admin/perfiles")
+@RequestMapping("/admin/perfiles")
 @SecurityRequirement(name = "bearer-key")
 
 public class PerfilController {
