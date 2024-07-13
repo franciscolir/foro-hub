@@ -1,4 +1,4 @@
-
+_
 <h2>ALURA | ORACLE<h2/>
 Challenge
 
@@ -42,36 +42,30 @@ Los tópicos están relacionados con un curso o lección dentro de la que se gen
 ## Imagenes de Aplicacion
 <h3>Funcionamiento<h3/>
   <p align="left">
-   <img src=>
+   <img src=https://github.com/user-attachments/assets/bbf6be98-674a-41ac-b303-8f87ade02bc3>
    </p>
    
    <p align="left">
-   <img src=>
+   <img src=https://github.com/user-attachments/assets/4812fefe-dd93-41fa-b0ee-c515f573d752>
    </p>
    
    <p align="left">
-   <img src=>
+   <img src=https://github.com/user-attachments/assets/0ad9597a-ae27-4543-9871-64234667c426>
      </p>
      <p align="left">
-   <img src=>
+   <img src=https://github.com/user-attachments/assets/ab49562f-7d04-4e76-acdb-d07885bcb135>
      </p>
      <p align="left">
-   <img src=>
-     </p>
-     <h3>Opciones no validas y errores<h3/>
-     <p align="left">
-   <img src=>
-     </p>
-     <p align="left">
-   <img src=>
+   <img src=https://github.com/user-attachments/assets/89915aa5-3226-44b0-b1ea-aba2d5a30722>
      </p>
   <p align="left">
-   <img src=>
+   <img src=https://github.com/user-attachments/assets/1b827873-b413-4891-99d0-aca71e5ecf9d>
      </p>
-      <h3>Salida del programa<h3/> 
+      <h3>Opciones no validas y errores<h3/>
      <p align="left">
-   <img src=>
-     </p>
+   <img src=https://github.com/user-attachments/assets/c0965526-2942-4a02-be82-944c366eaf87
+>
+ 
         
 ## Acceso al proyecto
 - El proyecto actualmente se encuantra alojado en Github. 
