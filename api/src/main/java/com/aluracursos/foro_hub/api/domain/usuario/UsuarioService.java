@@ -3,7 +3,6 @@ package com.aluracursos.foro_hub.api.domain.usuario;
 import com.aluracursos.foro_hub.api.domain.perfil.PerfilRepository;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.*;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
-import com.aluracursos.foro_hub.api.infra.global.user.UserNameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,6 @@ public class UsuarioService {
     UsuarioRepository repository;
     @Autowired
     PerfilRepository perfilRepository;
-    @Autowired
-    UserNameRepository userNameRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 

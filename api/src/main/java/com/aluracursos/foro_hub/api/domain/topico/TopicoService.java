@@ -7,7 +7,6 @@ import com.aluracursos.foro_hub.api.domain.topico.dto.DatosRegistraTopico;
 import com.aluracursos.foro_hub.api.domain.topico.dto.DatosResponseTopico;
 import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
-import com.aluracursos.foro_hub.api.infra.global.user.UserNameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -21,8 +20,6 @@ public class TopicoService {
     CursoRepository cursoRepository;
     @Autowired
     TopicoRepository topicoRepository;
-    @Autowired
-    UserNameRepository userNameRepository;
 
     //Registra un nuevo topico
     public DatosResponseTopico ingresarTopico (DatosRegistraTopico datos){

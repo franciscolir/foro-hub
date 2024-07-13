@@ -2,8 +2,7 @@ package com.aluracursos.foro_hub.api.controller;
 
 import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosAutenticacionUsuario;
-import com.aluracursos.foro_hub.api.infra.global.GlobalVariables;
-import com.aluracursos.foro_hub.api.infra.global.user.UserNameService;
+import com.aluracursos.foro_hub.api.infra.global.GlobalVariablesService;
 import com.aluracursos.foro_hub.api.infra.security.DatosTokenJWT;
 import com.aluracursos.foro_hub.api.infra.security.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +28,7 @@ public class AutenticacionController {
     @Autowired
     private TokenService tokenService;
     @Autowired
-    UserNameService userNameService;
+    GlobalVariablesService globalVariablesService;
 
     @Operation(summary = "Autenticar Usuario")
     @PostMapping
@@ -39,7 +38,7 @@ public class AutenticacionController {
         var tokenJWT = tokenService.generarToken((Usuario) authentication.getPrincipal());
         var extractName = tokenService.extractUsername(tokenJWT);
         var extraerId = tokenService.extraeIdDelToken(extractName);
-        userNameService.setGlobalIdUsuario(extraerId);
+        globalVariablesService.setGlobalIdUsuario(extraerId);
 
         return ResponseEntity.ok(new DatosTokenJWT(tokenJWT));
     }
