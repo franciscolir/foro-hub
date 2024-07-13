@@ -2,16 +2,18 @@ package com.aluracursos.foro_hub.api.infra.errores;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ValidationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.format.DateTimeParseException;
 
 @RestControllerAdvice
 public class TratadorDeErrores {
+
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity tratarError404(){
@@ -40,4 +42,6 @@ public class TratadorDeErrores {
             this(error.getField(), error.getDefaultMessage());
         }
     }
+
+
 }

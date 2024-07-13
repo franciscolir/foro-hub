@@ -1,4 +1,4 @@
-package com.aluracursos.foro_hub.api.controller.admin;
+package com.aluracursos.foro_hub.api.controller;
 
 import com.aluracursos.foro_hub.api.domain.curso.CursoService;
 import com.aluracursos.foro_hub.api.domain.curso.dto.DatosActualizaCurso;

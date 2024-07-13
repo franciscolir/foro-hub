@@ -1,4 +1,4 @@
-package com.aluracursos.foro_hub.api.controller.admin;
+package com.aluracursos.foro_hub.api.controller;
 
 import com.aluracursos.foro_hub.api.domain.perfil.*;
 import com.aluracursos.foro_hub.api.domain.perfil.dto.DatosActualizaPerfil;

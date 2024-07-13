@@ -32,20 +32,23 @@ public class SecurityConfiguration {
                         authorize.requestMatchers(HttpMethod.POST, "/login").permitAll()
                                 .requestMatchers("/swagger-ui.html", "v3/api-docs/**","/swagger-ui/**").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
+                                //.requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
                                 .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
+
     @Bean
     public AuthenticationManager authenticationManager (AuthenticationConfiguration authenticationConfiguration)
             throws Exception{
         return authenticationConfiguration.getAuthenticationManager();
+
     }
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 }
 

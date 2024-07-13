@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 
 @Table(name = "usuarios")
@@ -71,7 +72,7 @@ public class Usuario implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return List.of(new SimpleGrantedAuthority(getPerfil().getNombre()));
+        return List.of(new SimpleGrantedAuthority("ROLE_"+getPerfil().getNombre()));
     }
 
     @Override

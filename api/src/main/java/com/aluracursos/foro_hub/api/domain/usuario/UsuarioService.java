@@ -54,11 +54,12 @@ public class UsuarioService {
     //Cambia contraseña de usuario
     public String cambiaContraseña(Long id, DatosCambiaContraseñaUsuario datos) {
 
-        var clavengresada = datos.actualContraseña();
+        validaUsuarioIdAndActivo(id);
+        var claveIngresada = datos.actualContraseña();
         var usuario = repository.findById(id);
         var claveRegistrada = usuario.get().getContraseña();
 
-        if (passwordEncoder.matches(clavengresada,claveRegistrada)) {
+        if (passwordEncoder.matches(claveIngresada,claveRegistrada)) {
             var claveNueva = passwordEncoder.encode(datos.nuevaContraseña());
             usuarioById(id).actualizarContraseña(claveNueva);
         } else {
