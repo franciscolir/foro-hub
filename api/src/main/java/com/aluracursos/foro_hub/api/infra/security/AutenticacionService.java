@@ -16,9 +16,7 @@ public class AutenticacionService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String correoElectronico) throws UsernameNotFoundException {
-
-        System.out.println("paso por Autenticatio service");
-        if(usuarioRepository.existsByCorreoElectronicoAndActivoFalse(correoElectronico)){
+                if(usuarioRepository.existsByCorreoElectronicoAndActivoFalse(correoElectronico)){
             throw new ValidacionDeIntegridad("correo electronico registrado pero inactivo");
         }
 

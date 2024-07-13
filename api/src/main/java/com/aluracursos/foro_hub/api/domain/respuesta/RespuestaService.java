@@ -4,7 +4,6 @@ import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosActualizaRespuesta
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosRegistroRespuesta;
 import com.aluracursos.foro_hub.api.domain.respuesta.dto.DatosResponseRespuesta;
 import com.aluracursos.foro_hub.api.domain.topico.TopicoRepository;
-import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
 import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ public class RespuestaService {
     UsuarioRepository usuarioRepository;
     @Autowired
     TopicoRepository topicoRepository;
-    @Autowired
-    UserNameRepository userNameRepository;
 
     //Registra una nueva respuesta
     public DatosResponseRespuesta registrar(DatosRegistroRespuesta datos) {
@@ -71,18 +68,16 @@ public class RespuestaService {
     }
 
     public Respuesta obtenerRespuestaById (Long id){
-        Respuesta respuesta = respuestaRepository.getReferenceById(id);
 
-        return respuesta;
+        return respuestaRepository.getReferenceById(id);
     }
     //compara id del token con el id del usuario indicado
-    public Boolean comparaId (Long tokenId, Long id ){
-        var userName = userNameRepository.getReferenceById(tokenId);
+    public void comparaId (Long tokenId, Long id ){
         var respuesta = respuestaRepository.getReferenceById(id);
         var usuarioId = respuesta.getAutorRespuesta().getId();
-        if(!userName.getTokenId().equals(usuarioId)){
+
+        if(!tokenId.equals(usuarioId)){
             throw new ValidacionDeIntegridad("id no corresponde a usuario autenticado");
         }
-        return true;
     }
 }

@@ -1,8 +1,9 @@
 package com.aluracursos.foro_hub.api.controller;
 
-import com.aluracursos.foro_hub.api.domain.user.UserNameService;
 import com.aluracursos.foro_hub.api.domain.usuario.Usuario;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.DatosAutenticacionUsuario;
+import com.aluracursos.foro_hub.api.infra.global.GlobalVariables;
+import com.aluracursos.foro_hub.api.infra.global.user.UserNameService;
 import com.aluracursos.foro_hub.api.infra.security.DatosTokenJWT;
 import com.aluracursos.foro_hub.api.infra.security.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,14 +26,10 @@ public class AutenticacionController {
 
     @Autowired
     private AuthenticationManager manager;
-
     @Autowired
     private TokenService tokenService;
-
-
     @Autowired
     UserNameService userNameService;
-
 
     @Operation(summary = "Autenticar Usuario")
     @PostMapping
@@ -41,8 +38,8 @@ public class AutenticacionController {
         var authentication = manager.authenticate(authToken);
         var tokenJWT = tokenService.generarToken((Usuario) authentication.getPrincipal());
         var extractName = tokenService.extractUsername(tokenJWT);
-        var extarcId = tokenService.extraeIdDelToken(extractName);
-        userNameService.updateUserName(1L,extarcId);
+        var extraerId = tokenService.extraeIdDelToken(extractName);
+        userNameService.setGlobalIdUsuario(extraerId);
 
         return ResponseEntity.ok(new DatosTokenJWT(tokenJWT));
     }

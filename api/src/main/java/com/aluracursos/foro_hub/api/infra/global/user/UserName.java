@@ -1,4 +1,4 @@
-package com.aluracursos.foro_hub.api.domain.user;
+package com.aluracursos.foro_hub.api.infra.global.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

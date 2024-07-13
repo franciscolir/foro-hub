@@ -1,6 +1,7 @@
-package com.aluracursos.foro_hub.api.domain.user;
+package com.aluracursos.foro_hub.api.infra.global.user;
 
 
+import com.aluracursos.foro_hub.api.infra.global.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 public class UserNameService {
     @Autowired
     UserNameRepository userNameRepository;
+    @Autowired
+    GlobalVariables globalVariables;
 
     public UserName updateUserName(Long id, Long tokenId) {
         UserName user = userNameRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -15,4 +18,8 @@ public class UserNameService {
 
         return userNameRepository.save(user);
     }
+
+    public void setGlobalIdUsuario(Long id) {
+        globalVariables.setUserTokenId(id);
+            }
 }

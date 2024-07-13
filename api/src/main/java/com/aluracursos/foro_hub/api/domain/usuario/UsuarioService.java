@@ -1,10 +1,11 @@
 package com.aluracursos.foro_hub.api.domain.usuario;
 
 import com.aluracursos.foro_hub.api.domain.perfil.PerfilRepository;
-import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.*;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
+import com.aluracursos.foro_hub.api.infra.global.user.UserNameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -17,6 +18,8 @@ public class UsuarioService {
     PerfilRepository perfilRepository;
     @Autowired
     UserNameRepository userNameRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //Registra un nuevo usuario
     public DatosResponseUsuario registrar(DatosRegistroUsuario datos) {
@@ -50,9 +53,14 @@ public class UsuarioService {
 
     //Cambia contraseña de usuario
     public String cambiaContraseña(Long id, DatosCambiaContraseñaUsuario datos) {
-        if (repository.existsByIdAndContraseña(id, datos.actualContraseña())) {
-            var usuario = usuarioById(id);
-            usuario.actualizarContraseña(datos);
+
+        var clavengresada = datos.actualContraseña();
+        var usuario = repository.findById(id);
+        var claveRegistrada = usuario.get().getContraseña();
+
+        if (passwordEncoder.matches(clavengresada,claveRegistrada)) {
+            var claveNueva = passwordEncoder.encode(datos.nuevaContraseña());
+            usuarioById(id).actualizarContraseña(claveNueva);
         } else {
             throw new ValidacionDeIntegridad("datos no coinciden");
         }
@@ -86,18 +94,15 @@ public class UsuarioService {
     }
 
     public Usuario usuarioById (Long id){
-        var usuario = repository.getReferenceById(id);
 
-        return usuario;
+        return repository.getReferenceById(id);
     }
 
     //compara id del token con el id del usuario indicado
-    public Boolean comparaId (Long tokenId, Long usuarioId ){
-        var id = userNameRepository.getReferenceById(tokenId);
-        if(!id.getTokenId().equals(usuarioId)){
+    public void comparaId (Long tokenId, Long usuarioId ){
+        if(!tokenId.equals(usuarioId)){
             throw new ValidacionDeIntegridad("id no corresponde a usuario autenticado");
         }
-        return true;
     }
 
 }

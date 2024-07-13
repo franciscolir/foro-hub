@@ -2,18 +2,20 @@ package com.aluracursos.foro_hub.api.controller;
 
 import com.aluracursos.foro_hub.api.domain.usuario.*;
 import com.aluracursos.foro_hub.api.domain.usuario.dto.*;
-import com.aluracursos.foro_hub.api.infra.security.AutenticacionService;
+import com.aluracursos.foro_hub.api.infra.global.GlobalVariables;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
-@RequestMapping("/user/usuarios")
+@RequestMapping("/usuario")
 @SecurityRequirement(name = "bearer-key")
 
 public class UsuarioController {
@@ -23,9 +25,12 @@ public class UsuarioController {
     @Autowired
     UsuarioRepository repository;
     @Autowired
-    AutenticacionService autenticacionService;
+    GlobalVariables globalVariables;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //ingresar un usuario
+    @Operation(summary = "Registrar un usuario")
     @PostMapping
     @Transactional
     public ResponseEntity<DatosResponseUsuario> ingresarUsuario(@RequestBody @Valid DatosRegistroUsuario datos) {
@@ -35,41 +40,47 @@ public class UsuarioController {
     }
 
     //muestra todos los datos del usuario autenticado
-    @GetMapping("/{id}")
-    public ResponseEntity consultarUsuario (@PathVariable Long id){
-        service.comparaId(1L,id);
-        service.validaUsuarioIdAndActivo(id);
-        var usuario  =  repository.getReferenceById(id);
+    @Operation(summary = "Obtener los datos del usuario autenticado")
+    @GetMapping("/my")
+        public ResponseEntity consultarUsuario (){
+        var usuarioId = globalVariables.getUserTokenId();
+        service.validaUsuarioIdAndActivo(usuarioId);
+        var usuario  =  repository.getReferenceById(usuarioId);
         var response = new DatosResponseUsuario(usuario);
 
         return ResponseEntity.ok(response);
     }
 
     //actualiza el usuario autenticado
+    @Operation(summary = "Actualizar usuario autenticado")
     @PutMapping
     @Transactional
     public ResponseEntity actualizaUsuario (@RequestBody @Valid DatosActualizaUsuario datos){
-        service.comparaId(1L, datos.id());
+        var usuarioId = globalVariables.getUserTokenId();
+        service.comparaId(usuarioId, datos.id());
         var response = service.actualizar(datos);
 
         return ResponseEntity.ok(response);
     }
 
     //actualiza un contarseña de usuario autenticado
-    @PutMapping("/{id}")
+    @Operation(summary = "Actualizar/Cambiar contraseña usuario autenticado")
+    @PutMapping("/my")
     @Transactional
-    public ResponseEntity actualizaContraseña (@PathVariable Long id, @RequestBody @Valid DatosCambiaContraseñaUsuario datos){
-        service.comparaId(1L,id);
-        var response = service.cambiaContraseña(id,datos);
+    public ResponseEntity actualizaContraseña (@RequestBody @Valid DatosCambiaContraseñaUsuario datos){
+        var usuarioId = globalVariables.getUserTokenId();
+        var response = service.cambiaContraseña(usuarioId,datos);
 
         return ResponseEntity.ok(response);
     }
 
     //eliminar usuario autenticado (delete logico)
+    @Operation(summary = "Eliminar usuario autenticado")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarUsuario (@PathVariable Long id){
-        service.comparaId(1L,id);
+        var usuarioId = globalVariables.getUserTokenId();
+        service.comparaId(usuarioId, id);
         service.delete(id);
 
         return ResponseEntity.noContent().build();

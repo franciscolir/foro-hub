@@ -1,10 +1,11 @@
-package com.aluracursos.foro_hub.api.controller;
+package com.aluracursos.foro_hub.api.controller.admin;
 
 import com.aluracursos.foro_hub.api.domain.perfil.*;
 import com.aluracursos.foro_hub.api.domain.perfil.dto.DatosActualizaPerfil;
 import com.aluracursos.foro_hub.api.domain.perfil.dto.DatosListadoPerfiles;
 import com.aluracursos.foro_hub.api.domain.perfil.dto.DatosRegistroPerfil;
 import com.aluracursos.foro_hub.api.domain.perfil.dto.DatosResponsePerfil;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -28,6 +29,7 @@ public class PerfilController {
     PerfilRepository repository;
 
     //registra un perfil
+    @Operation(summary = "Registrar un perfil")
     @PostMapping
     @Transactional
     public ResponseEntity<DatosResponsePerfil> ingresarPerfil(@RequestBody @Valid DatosRegistroPerfil datos) {
@@ -37,6 +39,7 @@ public class PerfilController {
     }
 
     //muestra lista de perfiles
+    @Operation(summary = "Obtener una lista de todos los perfiles")
     @GetMapping
     public ResponseEntity<Page<DatosListadoPerfiles>> listaPerfiles(Pageable paginacion){
         var response = repository.findByActivoTrue(paginacion).map(DatosListadoPerfiles::new);
@@ -45,6 +48,7 @@ public class PerfilController {
     }
 
     //muestra todos los datos de 1 perfil
+    @Operation(summary = "Obtener los datos de un perfil")
     @GetMapping("/{id}")
     public ResponseEntity consultarPerfil (@PathVariable Long id){
         service.validaIdAndActivo(id);
@@ -55,6 +59,7 @@ public class PerfilController {
     }
 
     //actualiza un perfil
+    @Operation(summary = "Actualizar un perfil")
     @PutMapping
     @Transactional
     public ResponseEntity actualizaPerfil (@RequestBody @Valid DatosActualizaPerfil datos){
@@ -64,6 +69,7 @@ public class PerfilController {
     }
 
     //eliminar perfil (delete logico)
+    @Operation(summary = "Eliminar un perfil")
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity eliminarPerfil (@PathVariable Long id){

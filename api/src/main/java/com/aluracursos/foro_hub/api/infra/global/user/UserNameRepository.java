@@ -1,4 +1,4 @@
-package com.aluracursos.foro_hub.api.domain.user;
+package com.aluracursos.foro_hub.api.infra.global.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

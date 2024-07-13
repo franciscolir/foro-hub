@@ -5,9 +5,9 @@ import com.aluracursos.foro_hub.api.domain.topico.dto.DatosActualizaTopico;
 import com.aluracursos.foro_hub.api.domain.topico.dto.DatosCierraTopico;
 import com.aluracursos.foro_hub.api.domain.topico.dto.DatosRegistraTopico;
 import com.aluracursos.foro_hub.api.domain.topico.dto.DatosResponseTopico;
-import com.aluracursos.foro_hub.api.domain.user.UserNameRepository;
 import com.aluracursos.foro_hub.api.domain.usuario.UsuarioRepository;
 import com.aluracursos.foro_hub.api.infra.errores.ValidacionDeIntegridad;
+import com.aluracursos.foro_hub.api.infra.global.user.UserNameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -98,18 +98,16 @@ public class TopicoService {
     }
 
     public Topico topicoById (Long id){
-        var topico = topicoRepository.getReferenceById(id);
 
-        return topico;
+        return topicoRepository.getReferenceById(id);
     }
 
     //compara id del token con el id del usuario indicado
     public void comparaId (Long tokenId, Long id ){
-        var userName = userNameRepository.getReferenceById(tokenId);
         var topico = topicoRepository.getReferenceById(id);
         var usuarioId = topico.getUsuario().getId();
-        if(!userName.getTokenId().equals(usuarioId)){
-            throw new ValidacionDeIntegridad("datos de id solicitad no corresponde a usuario autenticado");
+        if(!tokenId.equals(usuarioId)){
+            throw new ValidacionDeIntegridad("datos de id solicitado no corresponden al usuario autenticado");
         }
     }
 }

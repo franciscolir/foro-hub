@@ -57,9 +57,9 @@ public class Usuario implements UserDetails {
     }
 
     //Actualiza contraseña usuario
-    public void actualizarContraseña(DatosCambiaContraseñaUsuario datos) {
-        if (datos.nuevaContraseña() != null)
-            this.contraseña = datos.nuevaContraseña();
+    public void actualizarContraseña(String nuevaContraseña) {
+        if (nuevaContraseña != null)
+            this.contraseña = nuevaContraseña;
     }
 
     //Inactiva usuario (delete logico)
@@ -70,7 +70,7 @@ public class Usuario implements UserDetails {
     //Metodos UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+
         return List.of(new SimpleGrantedAuthority(getPerfil().getNombre()));
     }
 
