@@ -11,7 +11,7 @@ Challenge
 
 <p align="justify">
 Esta API es parte de la formación de BackEnd con Java y Springboot en Alura. Esto en alianza con Oracle.
-Tiene como objetivo gestionar las consultas realizadas desle lad cliente en el contexto de un foro, utilizando HTTP para la API, manejo de Bases de datos MySql. Además de desarrollar utilizando librerías de Java, Spingboot, JPA, Hibernate.
+Tiene como objetivo gestionar las consultas realizadas desde lado cliente en el contexto de un foro, utilizando HTTP , manejo de Bases de datos MySql. Además de desarrollar utilizando librerías de Java, Spingboot, JPA, Hibernate.
 
 Para acceder al foro debes estar registrado. Los usuarios cuando se registran se les asigna un rol de usuario "USER" por defecto, por lo que el usuario tiene restricción para acceder a ciertas consultas, solo permitidas a usuario “ADMIN”.  La contraseña de acceso registrada por el usuario es codificada con Bcript. La Autenticación es con token. Sesión STATELESS.
 Ingresa tópicos del foro, los actualiza y los borra. Obtiene listas de tópicos ya sean del usuario registrado o de otros usuarios. También se pueden ingresar respuestas al tópico y cerrarlo cuando se considera que ya fue respondido satisfactoriamente.
